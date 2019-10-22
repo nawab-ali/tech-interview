@@ -1,0 +1,7 @@
+/**
+ * @mainpage Serial and Parallel Matrix Multiplication
+ *
+ * @author Nawab Ali
+ *
+ * This program implements serial and parallel matrix multiplication using OpenMP.
+ */

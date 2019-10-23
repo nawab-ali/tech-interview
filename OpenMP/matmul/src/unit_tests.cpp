@@ -31,6 +31,13 @@ TEST (MatMulTest, TestForEmptyMatrixFalse) {
 	ASSERT_EQ(is_matrix_empty(a), false);
 }
 
+TEST (MatMulTest, SerialMatmulThrowInvalidArgForEmptyMatrix) {
+	matrix_t a;
+	matrix_t b;
+
+	EXPECT_THROW(serial_matmul(a, b), invalid_argument);
+}
+
 int main(int argc, char** argv) {
 	testing::InitGoogleTest(&argc, argv);
 	return(RUN_ALL_TESTS());

@@ -8,6 +8,7 @@
 #define MATMUL_H
 
 #include<vector>
+#include<iostream>
 #include<stdexcept>
 using namespace std;
 
@@ -30,21 +31,35 @@ bool is_matrix_empty(matrix_t& m) {
 
 /**
  * @brief Multiply 2 matrices serially
- * @param a Matrix A
- * @param b Matrix B
+ * @param a Matrix A[M,K]
+ * @param b Matrix B[K,N]
  * @return Matrix C = A x B
  */
-matrix_t serial_matmul(matrix_t& a, matrix_t& b) {
-	long a_rows = 0;
-	long b_rows = 0;
-	long a_cols = 0;
-	long b_cols = 0;
-
-	if (is_matrix_empty(a) || is_matrix_empty(b)) {
+matrix_t serial_matmul(matrix_t& A, matrix_t& B) {
+	if (is_matrix_empty(A) || is_matrix_empty(B)) {
 		throw invalid_argument("Empty A or B matrix");
 	}
 
-	return(a);
+	long M = A.size();
+	long K_A = A[0].size();
+	long K_B = B.size();
+	long N = B[0].size();
+
+	if (K_A != K_B) {
+		throw invalid_argument("Matrix dimensions do not match");
+	}
+
+	matrix_t C(M, vector<double>(N, 0.0));
+
+	for (int i = 0; i < M; i++) {
+		for (int j = 0; j < N; j++) {
+			for (int k = 0; k < K_A; k++) {
+				C[i][j] += A[i][k] * B[k][j];
+			}
+		}
+	}
+
+	return(C);
 }
 
 #endif //MATMUL_H

@@ -66,6 +66,27 @@ TEST (MatMulTest, SerialMatmul) {
 	}
 }
 
+TEST (MatMulTest, ParallelMatmul) {
+	int z = 0;
+	matrix_t A(3, vector<double>(3, 0.0));
+	matrix_t B(3, vector<double>(3, 0.0));
+	matrix_t C_prime = {{15,18,21}, {42,54,66}, {69,90,111}};
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			A[i][j] = B[i][j] = z++;
+		}
+	}
+
+	matrix_t C = parallel_matmul(A, B);
+
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			ASSERT_EQ(C[i][j], C_prime[i][j]);
+		}
+	}
+}
+
 int main(int argc, char** argv) {
 	testing::InitGoogleTest(&argc, argv);
 	return(RUN_ALL_TESTS());

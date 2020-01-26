@@ -10,5 +10,26 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	return 0;
+	int M = 1000;
+	int K = 2250;
+	int N = 150;
+
+	matrix_t A(M, vector<double>(K, 0.0));
+	matrix_t B(K, vector<double>(N, 0.0));
+
+	for (int i = 0; i < M; i++) {
+		for (int j = 0; j < K; j++) {
+			A[i][j] = i+j;
+		}
+	}
+
+	for (int i = 0; i < K; i++) {
+		for (int j = 0; j < N; j++) {
+			B[i][j] = i*j;
+		}
+	}
+
+	matrix_t C = parallel_matmul(A, B);
+
+	return(0);
 }

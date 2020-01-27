@@ -12,7 +12,7 @@ using namespace std;
 int main(int argc, char** argv) {
 	int M = 1000;
 	int K = 2250;
-	int N = 150;
+	int N = 1500;
 
 	matrix_t A(M, vector<double>(K, 0.0));
 	matrix_t B(K, vector<double>(N, 0.0));

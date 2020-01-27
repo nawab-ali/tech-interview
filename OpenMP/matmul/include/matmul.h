@@ -96,7 +96,6 @@ matrix_t parallel_matmul(matrix_t& A, matrix_t& B) {
 			}
 		}
 	}
-	cout << "OMP thread id: " << omp_get_thread_num() << endl;
 
 	return(C);
 }

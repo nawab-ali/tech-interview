@@ -8,4 +8,4 @@ def heapsort(x):
     y = x[:]
     h.heapify(y)
 
-    return([h.pop() for i in range(h.size())])
+    return [h.pop() for i in range(h.size())]

@@ -25,7 +25,7 @@ class Heap:
         self._container.pop()
         self._sift_down(0)
 
-        return(retval)
+        return retval
 
     def heapify(self, x):
         """ Convert the list into a heap in place in linear time """
@@ -33,7 +33,7 @@ class Heap:
         self._container = x
         i = self.size() // 2
 
-        while (i >= 0):
+        while i >= 0:
             self._sift_down(i)
             i = i - 1
 
@@ -44,12 +44,12 @@ class Heap:
         """ Return the n smallest elements from the list """
 
         assert(n >= 0 and n <= self.size())
-        return([self.pop() for i in range(n)])
+        return [self.pop() for i in range(n)]
 
     def size(self):
         """ Number of elements in the heap """
 
-        return(len(self._container))
+        return len(self._container)
 
     def _parent(self, i):
         """ Parent of node i in the complete binary tree """
@@ -58,44 +58,44 @@ class Heap:
         index = (i - 1) // 2
         assert(index >= 0 and index < self.size())
 
-        return(index)
+        return index
 
     def _left_child(self, i):
         """ Left child of node i in the complete binary tree """
 
         assert(i >= 0 and i < self.size())
-        return(2*i + 1)
+        return 2*i + 1
 
     def _right_child(self, i):
         """ Right child of node i in the complete binary tree """
 
         assert(i >= 0 and i < self.size())
-        return(2*i + 2)
+        return 2*i + 2
 
     def _sift_up(self, i):
         """ Bubble up the element to the right position in the heap """
 
         assert(i >= 0 and i < self.size())
 
-        while (i > 0):
+        while i > 0:
             parent = self._parent(i)
             assert(parent >= 0 and parent < self.size())
-            if (self._container[i] < self._container[parent]):
+            if self._container[i] < self._container[parent]:
                 self._swap(i, parent)
             i = parent
 
     def _sift_down(self, i):
         """ Push down the element to the right place in the heap """
 
-        if (self.size() == 0):
+        if self.size() == 0:
             return
 
         assert(i >= 0 and i < self.size())
 
-        while (self._left_child(i) < self.size()):
+        while self._left_child(i) < self.size():
             mc = self._min_child(i)
             assert(mc >= 0 and mc < self.size())
-            if (self._container[i] > self._container[mc]):
+            if self._container[i] > self._container[mc]:
                 self._swap(i, mc)
             i = mc
 
@@ -115,16 +115,13 @@ class Heap:
         lc = self._left_child(i)
         rc = self._right_child(i)
 
-        if (rc >= self.size()):
-            return(lc)
+        if rc >= self.size():
+            return lc
 
         assert(lc >= 0 and lc < self.size())
         assert(rc >= 0 and rc < self.size())
 
         # Find the child with the min value
-        if (self._container[lc] < self._container[rc]):
-            minc = lc
-        else:
-            minc = rc
+        minc = lc if self._container[lc] < self._container[rc] else rc
 
-        return(minc)
+        return minc

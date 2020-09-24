@@ -3,18 +3,18 @@ import PhoneBook
 def main():
     pb = PhoneBook.PhoneBook()
 
-    pb.add('Nawab Ali', 5034709584)
-    print(pb.find_number('Nawab Ali'))
-    print(pb.find_name(5034709584))
+    pb.add('John Smith', 7243565567)
+    print(pb.find_number('John Smith'))
+    print(pb.find_name(7243565567))
 
-    print(pb.find_number('Ali'))
-    print(pb.find_name(503709584))
+    print(pb.find_number('Smith'))
+    print(pb.find_name(703709484))
 
-    pb.delete_name('Amelia Johnson')
-    pb.delete_number(3602017244)
+    pb.delete_name('Jane Doe')
+    pb.delete_number(7602417245)
 
-    pb.delete_number(5034709584)
-    print(pb.find_name(5034709584))
+    pb.delete_number(7243565567)
+    print(pb.find_name(7243565567))
 
 if __name__ == '__main__':
     main()

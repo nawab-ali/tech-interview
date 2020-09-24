@@ -12,15 +12,15 @@ def read_input(filename):
 
     with open(filename, 'r') as file:
         for line in file:
-            if (line_num == 0):
+            if line_num == 0:
                 num_threads, num_jobs = (int(i) for i in line.split())
-            elif (line_num == 1):
+            elif line_num == 1:
                 process_times = [int(i) for i in line.split()]
             line_num += 1
 
     assert(line_num == 2)
     assert(len(process_times) == num_jobs)
-    return(num_threads, num_jobs, process_times)
+    return num_threads, num_jobs, process_times
 
 def process_jobs(num_threads, job_queue):
     """ Process the jobs in parallel """
@@ -33,7 +33,7 @@ def process_jobs(num_threads, job_queue):
 
     for i in range(len(job_queue)):
         job = job_queue[i]
-        print(job.get_thread().get_thread_id(), job.get_start_time())
+        print(job.thread.thread_id, job.start_time)
 
 def main():
     job_queue = []

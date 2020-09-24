@@ -18,18 +18,18 @@ class ThreadPool:
         heapq.heappush(self.thread_pool, thread)
 
     def remove_thread(self):
-        return(heapq.heappop(self.thread_pool))
+        return heapq.heappop(self.thread_pool)
 
     def process_jobs(self, job_queue):
         for i in range(len(job_queue)):
             job = job_queue[i]
             thread = self.remove_thread()
-            job.set_start_time(thread.get_next_free_time())
-            thread.set_next_free_time(job.get_finish_time())
-            job.set_thread(thread)
+            job.start_time = thread.next_free_time
+            thread.next_free_time = job.get_finish_time()
+            job.thread = thread
             self.add_thread(thread)
 
-        return(job_queue)
+        return job_queue
 
     def info(self):
-        return(self.thread_pool)
+        return self.thread_pool

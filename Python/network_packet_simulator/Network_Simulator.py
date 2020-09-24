@@ -11,7 +11,7 @@ def read_input(filename):
 
     with open(filename, 'r') as file:
         for line in file:
-            if (line_num == 1):
+            if line_num == 1:
                 buf_size, num_pkts = (int(i) for i in line.split())
             else:
                 arrival_time, process_time = (int(i) for i in line.split())
@@ -20,7 +20,7 @@ def read_input(filename):
             line_num += 1
 
     assert(num_pkts == len(packets))
-    return([buf_size, num_pkts, packets])
+    return [buf_size, num_pkts, packets]
 
 def process_packets(buffer, packets):
     """ Process the incoming packets. """
@@ -32,8 +32,8 @@ def process_packets(buffer, packets):
 
         # Pop all packets from buffer whose finish time < new packet's
         # arrival time
-        while (not buffer.is_empty()):
-            if (buffer.get_packet(0).get_finish_time() <= pkt.get_arrival_time()):
+        while not buffer.is_empty():
+            if buffer.get_packet(0).get_finish_time() <= pkt.arrival_time:
                 # Remove packet from front of the buffer
                 tmp_pkt = buffer.pop()
                 assert(tmp_pkt != None)
@@ -41,14 +41,14 @@ def process_packets(buffer, packets):
                 break
 
         # If buffer is full, drop the packet else push the packet in the buffer
-        if (buffer.is_full()):
+        if buffer.is_full():
             pkt.drop()
         else:
-            if (buffer.is_empty()):
+            if buffer.is_empty():
                 # First incoming packet
-                pkt.set_start_time(pkt.get_arrival_time())
+                pkt.start_time = pkt.arrival_time
             else:
-                pkt.set_start_time(finish_time)
+                pkt.start_time = finish_time
 
             finish_time = pkt.get_finish_time()
             assert(buffer.append(pkt) == True)
@@ -57,10 +57,10 @@ def process_packets(buffer, packets):
     with open('./output.txt', 'w') as file:
         for i in range(len(packets)):
             pkt = packets[i]
-            if (pkt.is_dropped()):
+            if pkt.is_dropped():
                 file.write('-1\n')
             else:
-                file.write('%d\n' % (pkt.get_start_time()))
+                file.write('%d\n' % pkt.start_time)
 
 def main():
     # Read the inputs from the file

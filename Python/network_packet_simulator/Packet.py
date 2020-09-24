@@ -8,24 +8,15 @@ class Packet:
         self.finish_time = 0
         self.dropped = False
 
-    def get_arrival_time(self):
-        return(self.arrival_time)
-
-    def get_start_time(self):
-        return(self.start_time)
-
-    def set_start_time(self, time):
-        self.start_time = time
-
     def get_finish_time(self):
         self.finish_time = self.start_time + self.process_time
-        return(self.finish_time)
+        return self.finish_time
 
     def drop(self):
         self.dropped = True
 
     def is_dropped(self):
-        return(self.dropped)
+        return self.dropped
 
     def print_info(self):
         print(self.arrival_time, self.process_time, self.start_time,

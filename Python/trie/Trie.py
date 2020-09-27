@@ -74,7 +74,7 @@ class Trie(object):
         for character in key:
             child = self._search_character_in_node_children(current_node,
                                                             character)
-            if child != None:
+            if child is not None:
                 current_node = child
             else:
                 index = self._get_first_empty_child_index(current_node)
@@ -105,7 +105,7 @@ class Trie(object):
         for character in key:
             child = self._search_character_in_node_children(current_node,
                                                             character)
-            if child != None:
+            if child is not None:
                 current_node = child
             else:
                 return None
@@ -128,11 +128,11 @@ class Trie(object):
         node associated with character or None if character not found
         """
 
-        if node == None:
-            raise ValueError('node == None')
+        if node is None:
+            raise ValueError('node is None')
 
         for child in node.children:
-            if child != None and character == child.character:
+            if child is not None and character == child.character:
                 return child
 
         return None
@@ -149,12 +149,12 @@ class Trie(object):
         Index of first empty slot in node's children or None if full
         """
 
-        if node == None:
-            raise ValueError('node == None')
+        if node is None:
+            raise ValueError('node is None')
 
         index = 0
         for child in node.children:
-            if child == None:
+            if child is None:
                 return index
             else:
                 index += 1

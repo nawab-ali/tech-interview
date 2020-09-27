@@ -35,7 +35,7 @@ class SuffixTrie(Trie):
         for character in key:
             child = self._search_character_in_node_children(current_node,
                                                             character)
-            if child != None:
+            if child is not None:
                 current_node = child
             else:
                 return False

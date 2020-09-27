@@ -13,7 +13,7 @@ def poly_hash(key, x = 256, p = 1000000007):
 def precompute_text_hash(text, pattern, x = 256, p = 1000000007):
     """ Precompute the hash of all substrings of 'text' of len(pattern) """
 
-    assert(text != None and pattern != None)
+    assert(text is not None and pattern is not None)
     assert(len(text) >= len(pattern))
 
     n = len(text)
@@ -32,7 +32,7 @@ def precompute_text_hash(text, pattern, x = 256, p = 1000000007):
 def search(text, pattern):
     """ Search for 'pattern' in 'text' """
 
-    assert(text != None and pattern != None)
+    assert(text is not None and pattern is not None)
     assert(len(text) >= len(pattern))
 
     match = []

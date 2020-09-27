@@ -31,7 +31,7 @@ class HashTable:
 
         # Remove duplicate entries for key
         for key_val_pair in h_list:
-            if key_val_pair != None and key in key_val_pair:
+            if key_val_pair is not None and key in key_val_pair:
                 h_list.remove(key_val_pair)
 
         # Insert new entry for [key, value]
@@ -48,7 +48,7 @@ class HashTable:
         h_list = self.container[index]
 
         for key_val_pair in h_list:
-            if key_val_pair != None and key in key_val_pair:
+            if key_val_pair is not None and key in key_val_pair:
                 h_list.remove(key_val_pair)
 
     def find(self, key):
@@ -61,7 +61,7 @@ class HashTable:
         h_list = self.container[index]
 
         for key_val_pair in h_list:
-            if key_val_pair != None and key in key_val_pair:
+            if key_val_pair is not None and key in key_val_pair:
                 return key_val_pair[1]
 
         return None

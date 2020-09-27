@@ -36,7 +36,7 @@ def process_packets(buffer, packets):
             if buffer.get_packet(0).get_finish_time() <= pkt.arrival_time:
                 # Remove packet from front of the buffer
                 tmp_pkt = buffer.pop()
-                assert(tmp_pkt != None)
+                assert(tmp_pkt is not None)
             else:
                 break
 

@@ -45,7 +45,7 @@ def main():
         pb.delete(name)
 
     for name, _ in local_pb_del:
-        assert(pb.find(name) == None)
+        assert(pb.find(name) is None)
 
 if __name__ == '__main__':
     main()

@@ -6,22 +6,22 @@
 #include <iostream>
 using namespace std;
 
-class point {
+class Point {
 	private:
 		double x;
 		double y;
 
 	public:
-		point(const double x = 0.0, const double y = 0.0) : x(x), y(y) {}
-		point(const point& p);
+		Point(const double x = 0.0, const double y = 0.0) : x(x), y(y) {}
+		Point(const Point& p);
 		double getx(void) const;
 		double gety(void) const;
 		void setx(const double x);
 		void sety(const double y);
-		point operator+ (const point& p);
-		~point();
+		Point operator+ (const Point& p);
+		~Point();
 };
 
-ostream& operator<< (ostream& out, const point& p);
+ostream& operator<< (ostream& out, const Point& p);
 
 #endif //POINT_H

@@ -9,18 +9,18 @@
 
 using namespace std;
 
-class disjoint_set {
+class DisjointSet {
 	private:
 		vector<int> parent;
 		vector<int> rank;
 
 	public:
-		disjoint_set(const int n);
+		DisjointSet(const int n);
 		int find(const int x);
 		void merge(const int x, const int y);
 
 		// Overload the << operator
-		friend ostream& operator<< (ostream& out, const disjoint_set& s) {
+		friend ostream& operator<< (ostream& out, const DisjointSet& s) {
 			out << "Parent: ";
 			for (int i = 0; i < s.parent.size(); i++) {
 				out << s.parent[i] << " ";
@@ -37,7 +37,7 @@ class disjoint_set {
 };
 
 // Constructor
-disjoint_set::disjoint_set(const int n) {
+DisjointSet::DisjointSet(const int n) {
 	assert(n >= 0);
 	rank.assign(n, 0);
 	for (int i = 0; i < n; i++) {
@@ -46,7 +46,7 @@ disjoint_set::disjoint_set(const int n) {
 }
 
 // Return the root (representative) of x using path compression
-int disjoint_set::find(const int x) {
+int DisjointSet::find(const int x) {
 	assert(x >= 0 && x < parent.size());
 
 	// Find x with path compression
@@ -58,7 +58,7 @@ int disjoint_set::find(const int x) {
 }
 
 // Merge the 2 sets using union by rank
-void disjoint_set::merge(const int x, const int y) {
+void DisjointSet::merge(const int x, const int y) {
 	assert(x >= 0 && x < parent.size());
 	assert(y >= 0 && y < parent.size());
 

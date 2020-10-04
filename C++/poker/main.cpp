@@ -18,9 +18,8 @@ int main(int argc, char** argv) {
 
 	// Monte-Carlo simulations
 	for (int i = 0; i < sims; i++) {
-		deck d;
-		poker p;
-		vector<card> hand;
+		Deck d;
+		vector<Card> hand;
 
 		// Shuffle the deck
 		d.shuffle_deck();
@@ -29,9 +28,9 @@ int main(int argc, char** argv) {
 			hand.push_back(d.deal());
 		}
 
-		if (p.is_flush(hand)) {flush_count++;}
-		if (p.is_straight(hand)) {straight_count++;}
-		if (p.is_straight_flush(hand)) {straight_flush_count++;}
+		if (is_flush(hand)) {flush_count++;}
+		if (is_straight(hand)) {straight_count++;}
+		if (is_straight_flush(hand)) {straight_flush_count++;}
 	}
 
 	cout.precision(6);

@@ -9,16 +9,16 @@
 
 #include "Student.h"
 
-enum class support{TA, RA, FELLOW, OTHER};
+enum class Support{TA, RA, FELLOW, OTHER};
 
 /**
  * @class GradStudent
  * @brief This class creates and maintains records for a graduate student at
  * a university.
  */
-class GradStudent: public Student {
+class GradStudent : public Student {
 	protected:
-		support s;
+		Support s;
 		string dept;
 		string thesis;
 
@@ -34,7 +34,7 @@ class GradStudent: public Student {
 		 * @param thesis The student's thesis title.
 		 * @return None Constructor does not return anything.
 		 */
-		GradStudent(long id, string name, double gpa, year y, support s,
+		GradStudent(long id, string name, double gpa, Year y, Support s,
 								string dept, string thesis);
 
 		/**
@@ -42,7 +42,7 @@ class GradStudent: public Student {
 		 * @param void
 		 * @return Student's financial support.
 		 */
-		support get_support(void) const;
+		Support get_support(void) const;
 
 		/**
 		 * @brief Getter method for student's academic dept.
@@ -63,7 +63,7 @@ class GradStudent: public Student {
 		 * @param s Student's financial support.
 		 * @return void
 		 */
-		void set_support(const support s);
+		void set_support(const Support s);
 
 		/**
 		 * @brief Setter method for student's academic dept.
@@ -87,13 +87,13 @@ class GradStudent: public Student {
 		ostream& print(ostream& out) const;
 };
 
-GradStudent::GradStudent(long id, string name, double gpa, year y, support s,
+GradStudent::GradStudent(long id, string name, double gpa, Year y, Support s,
 												 string dept, string thesis):
 												 Student(id, name, gpa, y),
 												 s(s), dept(dept), thesis(thesis) {
 }
 
-support GradStudent::get_support(void) const {
+Support GradStudent::get_support(void) const {
 	return(s);
 }
 
@@ -105,7 +105,7 @@ string GradStudent::get_thesis(void) const {
 	return(thesis);
 }
 
-void GradStudent::set_support(const support s) {
+void GradStudent::set_support(const Support s) {
 	this->s = s;
 }
 
@@ -122,16 +122,16 @@ ostream& GradStudent::print(ostream& out) const {
 	out << ",";
 
 	switch(s) {
-		case support::TA:
+		case Support::TA:
 			out << "TA";
 			break;
-		case support::RA:
+		case Support::RA:
 			out << "RA";
 			break;
-		case support::FELLOW:
+		case Support::FELLOW:
 			out << "Fellow";
 			break;
-		case support::OTHER:
+		case Support::OTHER:
 			out << "Other";
 			break;
 		default:

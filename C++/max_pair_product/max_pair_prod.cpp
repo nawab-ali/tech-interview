@@ -1,30 +1,33 @@
-//Maximum pairwise product
+// Maximum pairwise product
 
 #include<vector>
+#include<cassert>
 #include<cstdlib>
 #include<iostream>
 
-using std::cout;
-using std::vector;
+using namespace std;
 
-long long MaxPairwiseProductFast(const vector<int>& v) {
+long long max_pairwise_product_fast(const vector<int>& v) {
   //Fast implementation: O(n)
-  int max_index1 = -1;
-  int max_index2 = -1;
+  int index1 = -1;
+  int index2 = -1;
 
   for (int i = 0; i < v.size(); i++) {
-    if ((max_index1 == -1) || (v[i] > v[max_index1])) max_index1 = i;
+    if ((index1 == -1) || (v[i] > v[index1])) {
+      index1 = i;
+    }
   }
 
   for (int i = 0; i < v.size(); i++) {
-    if ((i != max_index1) && ((max_index2 == -1) || (v[i] > v[max_index2])))
-      max_index2 = i;
+    if ((i != index1) && ((index2 == -1) || (v[i] > v[index2]))) {
+      index2 = i;
+    }
   }
 
-  return(v[max_index1] * v[max_index2]);
+  return(v[index1] * v[index2]);
 }
 
-long long MaxPairwiseProduct(const vector<int>& v) {
+long long max_pairwise_product_slow(const vector<int>& v) {
   //Naive implementation: O(n^2)
   int n = v.size();
   long long prod = 0;
@@ -36,38 +39,18 @@ long long MaxPairwiseProduct(const vector<int>& v) {
       if (prod > max_prod) max_prod = prod;
     }
   }
-  return max_prod;
+  return(max_prod);
 }
 
-int stress_test() {
-  //Stress test suite
-  int n = 10000;
-  vector<int> v(n);
-  long long max_prod1;
-  long long max_prod2;
+int main(int argc, char** argv) {
+  vector<int> v(10000);
+  srand(time(0));
 
-  while(1) {
-    for (int i = 0; i < v.size(); i++) {
-      v[i] = rand() % 40000 + 2;
+  for (int i = 0; i < 100; i++) {
+    for (int j = 0; j < v.size(); j++) {
+      v[j] = rand() % 40000 + 2;
     }
-
-    max_prod1 = MaxPairwiseProduct(v);
-    max_prod2 = MaxPairwiseProductFast(v);
-
-    if (max_prod1 != max_prod2) {
-      cout << "Error: "  << max_prod1 << " " << max_prod2 << std::endl;
-      for (int i = 0; i < v.size(); i++) {
-        cout << v[i] << " ";
-      }
-      cout << std::endl;
-      return 1;
-    } else {
-      cout << "OK: "  << max_prod1 << " " << max_prod2 << std::endl;
-    }
+    assert(max_pairwise_product_slow(v) == max_pairwise_product_fast(v));
   }
-}
-
-int main() {
-  stress_test();
-  return 0;
+  return(0);
 }

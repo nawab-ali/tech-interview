@@ -11,7 +11,7 @@
 #include<iostream>
 
 using namespace std;
-enum class year{FRESHMAN, SOPHOMORE, JUNIOR, SENIOR, GRADUATE};
+enum class Year{FRESHMAN, SOPHOMORE, JUNIOR, SENIOR, GRADUATE};
 
 /**
  * @class Student
@@ -23,7 +23,7 @@ class Student {
 		long id;
 		string name;
 		double gpa;
-		year y;
+		Year y;
 
 	public:
 		/**
@@ -34,7 +34,7 @@ class Student {
 		 * @param y The year the student is enrolled in.
 		 * @return None Constructor does not return anything.
 		 */
-		Student(long id, string name, double gpa, year y);
+		Student(long id, string name, double gpa, Year y);
 
 		/**
 		 * @brief Getter method for student identification number.
@@ -62,7 +62,7 @@ class Student {
 		 * @param void
 		 * @return Student year.
 		 */
-		year get_year(void) const;
+		Year get_year(void) const;
 
 		/**
 		 * @brief Setter method for student identification number.
@@ -90,7 +90,7 @@ class Student {
 		 * @param y Student year.
 		 * @return void
 		 */
-		void set_year(const year y);
+		void set_year(const Year y);
 
 		/**
 		 * @brief Virtual function to print student record.
@@ -110,7 +110,7 @@ class Student {
 		}
 };
 
-Student::Student(long id, string name, double gpa, year y):
+Student::Student(long id, string name, double gpa, Year y):
 								 id(id), name(name), gpa(gpa), y(y) {
 }
 
@@ -126,7 +126,7 @@ double Student::get_gpa(void) const {
 	return(gpa);
 }
 
-year Student::get_year(void) const {
+Year Student::get_year(void) const {
 	return(y);
 }
 
@@ -142,26 +142,26 @@ void Student::set_gpa(const double gpa) {
 	this->gpa = gpa;
 }
 
-void Student::set_year(const year y) {
+void Student::set_year(const Year y) {
 	this->y = y;
 }
 
 ostream& Student::print(ostream& out) const {
 	out << id << "," << name << "," << gpa << ",";
 	switch(y) {
-		case year::FRESHMAN:
+		case Year::FRESHMAN:
 			out << "Freshman";
 			break;
-		case year::SOPHOMORE:
+		case Year::SOPHOMORE:
 			out << "Sophomore";
 			break;
-		case year::JUNIOR:
+		case Year::JUNIOR:
 			out << "Junior";
 			break;
-		case year::SENIOR:
+		case Year::SENIOR:
 			out << "Senior";
 			break;
-		case year::GRADUATE:
+		case Year::GRADUATE:
 			out << "Graduate";
 			break;
 		default:

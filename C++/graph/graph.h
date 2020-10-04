@@ -30,19 +30,19 @@ typedef pair<bool, double> edge_cost_t;
 // Data structure used in shortest path calculation
 typedef pair<double, int> spth_t;
 
-class graph {
+class Graph {
 	private:
 		bool directed;
 		int num_vertices;
-		vector < vector<edge_cost_t> > adj_matrix;
+		vector <vector<edge_cost_t>> adj_matrix;
 		void populate_default_graph(void);
-		bool is_cycle(disjoint_set& ds, const edge_t& e);
+		bool is_cycle(DisjointSet& ds, const edge_t& e);
 
 	public:
-		graph(const bool directed, const int num_vertices);
-		graph(const bool directed, const int num_vertices,
+		Graph(const bool directed, const int num_vertices);
+		Graph(const bool directed, const int num_vertices,
 					const double edge_density, const double weight_range);
-		graph(const bool directed, const string& filename);
+		Graph(const bool directed, const string& filename);
 		bool is_directed(void);
 		int V(void);	// #vertices
 		long E(void);	// #edges
@@ -58,7 +58,7 @@ class graph {
 		void clear(void);
 
 		// Overload the << operator
-		friend ostream& operator<< (ostream& out, const graph& g) {
+		friend ostream& operator<< (ostream& out, const Graph& g) {
 			for (int i = 0; i < g.num_vertices; i++) {
 				for (int j = 0; j < g.num_vertices; j++) {
 					out << "<" << g.adj_matrix[i][j].first << ", " <<
@@ -71,7 +71,7 @@ class graph {
 };
 
 // Populate the graph with default values
-void graph::populate_default_graph(void) {
+void Graph::populate_default_graph(void) {
 	assert(num_vertices >= 0);
 
 	for (int i = 0; i < num_vertices; i++) {
@@ -84,7 +84,7 @@ void graph::populate_default_graph(void) {
 }
 
 // Does edge e create a cycle in the spanning tree?
-bool graph::is_cycle(disjoint_set& ds, const edge_t& e) {
+bool Graph::is_cycle(DisjointSet& ds, const edge_t& e) {
 	int i = get<1>(e);
 	int j = get<2>(e);
 
@@ -92,7 +92,7 @@ bool graph::is_cycle(disjoint_set& ds, const edge_t& e) {
 }
 
 // Constructor
-graph::graph(const bool directed = false, const int num_vertices = 0) {
+Graph::Graph(const bool directed = false, const int num_vertices = 0) {
 	assert(num_vertices >= 0);
 	this->directed = directed;
 	this->num_vertices = num_vertices;
@@ -102,14 +102,14 @@ graph::graph(const bool directed = false, const int num_vertices = 0) {
 }
 
 // Constructor to generate random edges in the graph
-graph::graph(const bool directed, const int num_vertices,
+Graph::Graph(const bool directed, const int num_vertices,
 						 const double edge_density, const double weight_range) :
-						 graph(directed, num_vertices) {
+						 Graph(directed, num_vertices) {
 	random_graph(edge_density, weight_range);
 }
 
 // Constructor to generate a graph from an input text file
-graph::graph(const bool directed, const string& filename) {
+Graph::Graph(const bool directed, const string& filename) {
 	string line;
 	int line_num = 0;
 
@@ -144,17 +144,17 @@ graph::graph(const bool directed, const string& filename) {
 }
 
 // Is it a directed graph?
-bool graph::is_directed(void) {
+bool Graph::is_directed(void) {
 	return(directed);
 }
 
 // Return the number of vertices in the graph
-int graph::V(void) {
+int Graph::V(void) {
 	return(num_vertices);
 }
 
 // Return the number of edges in the graph
-long graph::E(void) {
+long Graph::E(void) {
 	long num_edges = 0;
 
 	for (int i = 0; i < num_vertices; i++) {
@@ -169,14 +169,14 @@ long graph::E(void) {
 }
 
 // Test whether there is an edge from node u to node v
-bool graph::adjacent(const int u, const int v) {
+bool Graph::adjacent(const int u, const int v) {
 	assert(u >= 0 && u < num_vertices);
 	assert(v >= 0 && v < num_vertices);
 	return(adj_matrix[u][v].first);
 }
 
 // Lists all nodes v such that there is an edge from u to v
-vector<int> graph::neighbors(const int u) {
+vector<int> Graph::neighbors(const int u) {
 	assert(u >= 0 && u < num_vertices);
 	vector<int> v;
 
@@ -190,7 +190,7 @@ vector<int> graph::neighbors(const int u) {
 }
 
 // Add edge from u to v, if it is not there
-bool graph::add_edge(const int u, const int v, const double weight = 0.0) {
+bool Graph::add_edge(const int u, const int v, const double weight = 0.0) {
 	assert(u >= 0 && u < num_vertices);
 	assert(v >= 0 && v < num_vertices);
 	assert(u != v);
@@ -210,7 +210,7 @@ bool graph::add_edge(const int u, const int v, const double weight = 0.0) {
 }
 
 // Delete the edge from u to v, if it is there
-bool graph::delete_edge(const int u, const int v) {
+bool Graph::delete_edge(const int u, const int v) {
 	assert(u >= 0 && u < num_vertices);
 	assert(v >= 0 && v < num_vertices);
 
@@ -229,7 +229,7 @@ bool graph::delete_edge(const int u, const int v) {
 }
 
 // Returns the weight associated with the edge (u, v)
-double graph::get_edge_weight(const int u, const int v) {
+double Graph::get_edge_weight(const int u, const int v) {
 	assert(u >= 0 && u < num_vertices);
 	assert(v >= 0 && v < num_vertices);
 	assert(adj_matrix[u][v].first);
@@ -238,7 +238,7 @@ double graph::get_edge_weight(const int u, const int v) {
 }
 
 // Set the weight associated with the edge (u, v)
-void graph::set_edge_weight(const int u, const int v, const double weight) {
+void Graph::set_edge_weight(const int u, const int v, const double weight) {
 	assert(u >= 0 && u < num_vertices);
 	assert(v >= 0 && v < num_vertices);
 
@@ -252,7 +252,7 @@ void graph::set_edge_weight(const int u, const int v, const double weight) {
 }
 
 // Generate a random set of edges based on edge_density and weight_range
-void graph::random_graph(const double edge_density, const double weight_range) {
+void Graph::random_graph(const double edge_density, const double weight_range) {
 	assert(edge_density >= 0 && edge_density <= 1);
 	assert(weight_range >= 0);
 
@@ -278,7 +278,7 @@ void graph::random_graph(const double edge_density, const double weight_range) {
 
 // Calculate the shortest path from vertex u to all other vertices using
 // Dijkstra's algorithm
-vector<double> graph::shortest_path(const int u) {
+vector<double> Graph::shortest_path(const int u) {
 	priority_queue <spth_t, vector<spth_t>, greater<spth_t> > pq;
 	vector<double> distance(num_vertices, numeric_limits<double>::infinity());
 
@@ -316,9 +316,9 @@ vector<double> graph::shortest_path(const int u) {
 }
 
 // Find a minimum spanning tree using Kruskal's algorithm
-vector<edge_t> graph::mst(void) {
+vector<edge_t> Graph::mst(void) {
 	int i = 0;
-	disjoint_set ds(V());
+	DisjointSet ds(V());
 	vector<edge_t> edges;
 	vector<edge_t> mst_edges;
 
@@ -354,7 +354,7 @@ vector<edge_t> graph::mst(void) {
 }
 
 // Clear the edges in the graph
-void graph::clear(void) {
+void Graph::clear(void) {
 	for (int i = 0; i < num_vertices; i++) {
 		for (int j = 0; j < num_vertices; j++) {
 			delete_edge(i, j);

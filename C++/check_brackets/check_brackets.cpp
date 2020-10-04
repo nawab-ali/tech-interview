@@ -45,17 +45,13 @@ bool is_balanced(string expression) {
   }
 
   //Unbalanced brackets if stack not empty
-  if (s.empty()) {
-    return true;
-  } else {
-    return false;
-  }
+  return(s.empty());
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
   if (argc < 2) {
     cout << "Usage: " << argv[0] << " <file>" << endl;
-    return 1;
+    return(1);
   }
 
   string line;
@@ -68,8 +64,8 @@ int main(int argc, char **argv) {
     testcases.close();
   } else {
     cout << "ERROR: Unable to open file " << argv[1] << endl;
-    return 1;
+    return(1);
   }
 
-  return 0;
+  return(0);
 }

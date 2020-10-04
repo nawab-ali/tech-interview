@@ -3,13 +3,14 @@ GCD(a, b)
 **/
 
 #include<ctime>
+#include<cassert>
 #include<iostream>
 #include<algorithm>
 
 using namespace std;
 
-//Naive GCD implementation
-int GCDNaive(int a, int b) {
+//Naive GCD implementation: O(n)
+int gcd_slow(int a, int b) {
   int gcd = -1;
 
   for (int i = 1; i <= min(a, b); i++) {
@@ -18,44 +19,31 @@ int GCDNaive(int a, int b) {
       gcd = i;
     }
   }
-  return gcd;
+  return(gcd);
 }
 
-//Fast GCD implementation
-int GCDFast(int a, int b) {
+//Fast GCD implementation: O(log n)
+int gcd_fast(int a, int b) {
   if (a < b) {
     swap(a, b);
   }
 
   if (!b) {
-    return a;
+    return(a);
   } else {
-    GCDFast(b, a%b);
+    gcd_fast(b, a%b);
   }
 }
 
-//Stress test
-void stress_test(void) {
+int main(int argc, char** argv) {
+  int limit = 10000000;
   srand(time(NULL));
 
-  while(1) {
-    int limit = 10000000;
+  for (int i = 0; i < 100; i++) {
     int a = rand() % limit + 1;
     int b = rand() % limit + 1;
-    long long gcd_slow = GCDNaive(a, b);
-    long long gcd_fast = GCDFast(a, b);
 
-    if (gcd_slow == gcd_fast) {
-      cout << "Success: " << a << " " << b << " " << gcd_slow << " " << gcd_fast << endl;
-    } else {
-      cout << "Error: " << a << " " << b << " " << gcd_slow << " " << gcd_fast << endl;
-      return;
-    }
+    assert(gcd_slow(a, b) == gcd_fast(a, b));
   }
-  return;
-}
-
-int main(int argc, char **argv) {
-  stress_test();
-  return 0;
+  return(0);
 }

@@ -2,7 +2,7 @@
 
 CC=g++
 CFLAGS=-I. -pipe -O2 -std=c++11
-DEPS=slist_node.h slist.h
+DEPS=node.h list.h
 OBJS=main.o
 EXEC=main
 

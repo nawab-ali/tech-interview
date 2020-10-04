@@ -8,20 +8,20 @@
 
 using namespace std;
 
-enum class suit{SPADE, HEART, DIAMOND, CLUB};
+enum class Suit{SPADE, HEART, DIAMOND, CLUB};
 
-class card {
+class Card {
 	private:
-		suit s;
+		Suit s;
 		int pips;
 
 	public:
-		card(const suit s, const int pips);
-		suit get_suit(void) const;
+		Card(const Suit s, const int pips);
+		Suit get_suit(void) const;
 		int get_pips(void) const;
 
 		// Overload the << operator
-		friend ostream& operator<< (ostream& out, const card& c) {
+		friend ostream& operator<< (ostream& out, const Card& c) {
 			assert(c.pips >= 1 && c.pips <= 13);
 
 			// Print the pips of the card
@@ -71,16 +71,16 @@ class card {
 
 			// Print the suit of the card
 			switch(c.s) {
-				case suit::SPADE:
+				case Suit::SPADE:
 					out << "Spades";
 					break;
-				case suit::HEART:
+				case Suit::HEART:
 					out << "Hearts";
 					break;
-				case suit::DIAMOND:
+				case Suit::DIAMOND:
 					out << "Diamonds";
 					break;
-				case suit::CLUB:
+				case Suit::CLUB:
 					out << "Clubs";
 					break;
 				default:
@@ -92,7 +92,7 @@ class card {
 };
 
 // Constructor
-card::card(const suit s, const int pips) {
+Card::Card(const Suit s, const int pips) {
 	//There are 13 cards in each suit
 	assert(pips >= 1 && pips <= 13);
 
@@ -101,12 +101,12 @@ card::card(const suit s, const int pips) {
 }
 
 // Return the suit of the card
-suit card::get_suit(void) const {
+Suit Card::get_suit(void) const {
 	return(s);
 }
 
 // Return the pips of the card
-int card::get_pips(void) const {
+int Card::get_pips(void) const {
 	return(pips);
 }
 

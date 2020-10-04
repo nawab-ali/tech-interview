@@ -1,15 +1,15 @@
-#include "slist.h"
+#include "list.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char** argv) {
 	int pos = 0;
-	slist<int> l1, l2;
+	LinkedList<int> l1, l2;
 
 	for (int i = 0; i < 10; i++) {
 		pos = l1.insert_after(pos, i);
 	}
 
 	l2 = l1;
-	slist<int> l3 = l1;
+	LinkedList<int> l3 = l1;
 
 	for (int i = 0; i < 5; i++) {
 		l3.erase_after(5);
@@ -30,5 +30,5 @@ int main(int argc, char **argv) {
 	cout << l1 << endl;
 	cout << l1.empty() << endl;
 
-	return 0;
+	return(0);
 }

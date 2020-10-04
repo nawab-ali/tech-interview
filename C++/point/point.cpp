@@ -2,37 +2,37 @@
 
 #include "point.h"
 
-point::point(const point& p) {
+Point::Point(const Point& p) {
 	x = p.getx();
 	y = p.gety();
 }
 
-double point::getx(void) const {
-	return x;
+double Point::getx(void) const {
+	return(x);
 }
 
-double point::gety(void) const {
-	return y;
+double Point::gety(void) const {
+	return(y);
 }
 
-void point::setx(const double x) {
+void Point::setx(const double x) {
 	this->x = x;
 }
 
-void point::sety(const double y) {
+void Point::sety(const double y) {
 	this->y = y;
 }
 
-point point::operator+ (const point& p) {
-	point p1;
+Point Point::operator+ (const Point& p) {
+	Point p1;
 	p1.setx(this->x + p.getx());
 	p1.sety(this->y + p.gety());
-	return p1;
+	return(p1);
 }
 
-point::~point() {}
+Point::~Point() {}
 
-ostream& operator<< (ostream& out, const point& p) {
+ostream& operator<< (ostream& out, const Point& p) {
 	out << "(" << p.getx() << ", " << p.gety() << ")";
-	return out;
+	return(out);
 }

@@ -150,23 +150,23 @@ def main():
             step += 1
             offset += (n_input+1)
 
-            print('Training complete')
-            print('Elapsed Time: ', elapsed_time(time.time()-start_time))
+        print('Training complete')
+        print('Elapsed Time: ', elapsed_time(time.time()-start_time))
 
-            sentence = 'had a general'
-            words = sentence.split(' ')
-            try:
-                symbols_in_keys = [dictionary[str(words[i])] for i in range(len(words))]
-                for i in range(32):
-                    keys = np.reshape(np.array(symbols_in_keys), [-1, n_input, 1])
-                    onehot_pred = sess.run(pred, feed_dict={x: keys})
-                    onehot_pred_index = int(tf.argmax(onehot_pred, 1).eval())
-                    sentence = '%s %s' % (sentence, reverse_dictionary[onehot_pred_index])
-                    symbols_in_keys = symbols_in_keys[1:]
-                    symbols_in_keys.append(onehot_pred_index)
-                print(sentence)
-            except:
-                print('Word not in dictionary')
+        sentence = 'had a general'
+        words = sentence.split(' ')
+        try:
+            symbols_in_keys = [dictionary[str(words[i])] for i in range(len(words))]
+            for i in range(32):
+                keys = np.reshape(np.array(symbols_in_keys), [-1, n_input, 1])
+                onehot_pred = sess.run(pred, feed_dict={x: keys})
+                onehot_pred_index = int(tf.argmax(onehot_pred, 1).eval())
+                sentence = '%s %s' % (sentence, reverse_dictionary[onehot_pred_index])
+                symbols_in_keys = symbols_in_keys[1:]
+                symbols_in_keys.append(onehot_pred_index)
+            print(sentence)
+        except:
+            print('Word not in dictionary')
 
 if __name__ == '__main__':
     main()

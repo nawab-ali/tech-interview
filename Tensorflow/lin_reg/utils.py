@@ -38,10 +38,7 @@ def read_birth_life_data(filename):
     data = np.asarray(data, dtype=np.float32)
     return data, n_samples
 
-def download_one_file(download_url, 
-                    local_dest, 
-                    expected_byte=None, 
-                    unzip_and_remove=False):
+def download_one_file(download_url, local_dest, expected_byte=None, unzip_and_remove=False):
     """ 
     Download the file from download_url into local_dest
     if the file doesn't already exists.

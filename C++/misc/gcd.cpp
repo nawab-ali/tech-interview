@@ -31,7 +31,7 @@ int gcd_fast(int a, int b) {
     if (!b) {
         return (a);
     } else {
-        gcd_fast(b, a % b);
+        return gcd_fast(b, a % b);
     }
 }
 

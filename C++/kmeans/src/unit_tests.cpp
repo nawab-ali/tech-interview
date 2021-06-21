@@ -45,7 +45,7 @@ TEST (KMeansTest, UtilTokenizeDataDim0) {
 TEST (KMeansTest, UtilReadTrainingDataSize) {
 	vector<vector<double> > training_data;
 
-  training_data = read_training_data<double>("../data/iris.txt", 4);
+    training_data = read_training_data<double>("../data/iris.txt", 4);
 
 	ASSERT_EQ(150, training_data.size());
 }
@@ -54,7 +54,7 @@ TEST (KMeansTest, UtilReadTrainingDataFirstRow) {
 	vector<double> row0{5.1,3.5,1.4,0.2};
 	vector<vector<double> > training_data;
 
-  training_data = read_training_data<double>("../data/iris.txt", 4);
+    training_data = read_training_data<double>("../data/iris.txt", 4);
 
 	ASSERT_EQ(row0, training_data[0]);
 }
@@ -63,7 +63,7 @@ TEST (KMeansTest, UtilReadTrainingDataLastRow) {
 	vector<vector<double> > training_data;
 	vector<double> row149{5.9,3.0,5.1,1.8};
 
-  training_data = read_training_data<double>("../data/iris.txt", 4);
+    training_data = read_training_data<double>("../data/iris.txt", 4);
 
 	ASSERT_EQ(row149, training_data[149]);
 }
@@ -168,7 +168,7 @@ TEST (KMeansTest, PointOverloadEqualOperator) {
 	point1 = point2;
 	bool b1 = (point1 == point2);
 	bool b2 = (point1.get_dimensions() == point2.get_dimensions()) &&
-						(point1.get_coordinates() == point2.get_coordinates());
+	          (point1.get_coordinates() == point2.get_coordinates());
 
 	ASSERT_EQ(b1, b2);
 }
@@ -234,8 +234,7 @@ TEST (KMeansTest, ClusterOverloadEqualOperator) {
 
 	cluster2 = cluster1;
 	bool b1 = (cluster1 == cluster2);
-	bool b2 = (cluster1.get_id() == cluster2.get_id() &&
-						 cluster1.get_points() == cluster2.get_points());
+	bool b2 = (cluster1.get_id() == cluster2.get_id() && cluster1.get_points() == cluster2.get_points());
 
 	ASSERT_EQ(b1, b2);
 }
@@ -326,8 +325,7 @@ TEST (KMeansTest, ClusterCalculateCentroid) {
 	vector<double> centroid_coordinates = cluster.get_centroid().get_coordinates();
 
 	for (int i = 0; i < point4.get_coordinates().size(); i++) {
-		ASSERT_NEAR(point4.get_coordinates()[i],
-								centroid_coordinates[i], 0.00001);
+		ASSERT_NEAR(point4.get_coordinates()[i], centroid_coordinates[i], 0.00001);
 	}
 }
 

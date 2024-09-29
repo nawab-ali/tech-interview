@@ -1,0 +1,7 @@
+/**
+ * @mainpage Parallel Box Blur Filter
+ *
+ * @author Nawab Ali
+ *
+ * This program implements a Box Blur Filter using OpenMP.
+ */

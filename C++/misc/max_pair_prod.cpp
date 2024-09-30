@@ -1,14 +1,14 @@
 // Maximum pairwise product
 
-#include<vector>
-#include<cassert>
-#include<cstdlib>
-#include<iostream>
+#include <cassert>
+#include <cstdlib>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
 long long max_pairwise_product_fast(const vector<int> &v) {
-    //Fast implementation: O(n)
+    // Fast implementation: O(n)
     int index1 = -1;
     int index2 = -1;
 
@@ -28,7 +28,7 @@ long long max_pairwise_product_fast(const vector<int> &v) {
 }
 
 long long max_pairwise_product_slow(const vector<int> &v) {
-    //Naive implementation: O(n^2)
+    // Naive implementation: O(n^2)
     int n = v.size();
     long long prod = 0;
     long long max_prod = 0;
@@ -36,7 +36,8 @@ long long max_pairwise_product_slow(const vector<int> &v) {
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             prod = v[i] * v[j];
-            if (prod > max_prod) max_prod = prod;
+            if (prod > max_prod)
+                max_prod = prod;
         }
     }
     return (max_prod);

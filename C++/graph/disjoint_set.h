@@ -3,18 +3,18 @@
 #ifndef DISJOINT_SET_H
 #define DISJOINT_SET_H
 
-#include<vector>
-#include<cassert>
-#include<iostream>
+#include <cassert>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
 class DisjointSet {
-private:
+  private:
     vector<int> parent;
     vector<int> rank;
 
-public:
+  public:
     DisjointSet(const int n);
     int find(const int x);
     void merge(const int x, const int y);
@@ -85,4 +85,4 @@ void DisjointSet::merge(const int x, const int y) {
     }
 }
 
-#endif //DISJOINT_SET_H
+#endif // DISJOINT_SET_H

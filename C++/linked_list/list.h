@@ -3,17 +3,16 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#include<new>
-#include<vector>
-#include<cassert>
-#include<iostream>
 #include "node.h"
+#include <cassert>
+#include <iostream>
+#include <new>
+#include <vector>
 
 using namespace std;
 
-template<class T>
-class LinkedList {
-private:
+template <class T> class LinkedList {
+  private:
     int size;
     Node<T> *head;
     Node<T> *tail;
@@ -21,7 +20,7 @@ private:
     vector<int> search(const T &data);
     Node<T> *create_node(const T &data);
 
-public:
+  public:
     LinkedList() : size(0), head(nullptr), tail(nullptr) {}
     LinkedList(const LinkedList<T> &list);
     LinkedList<T> &operator=(const LinkedList<T> &list);
@@ -58,8 +57,7 @@ public:
 };
 
 // Search for 'data' in the list and return the positions
-template<class T>
-vector<int> LinkedList<T>::search(const T &data) {
+template <class T> vector<int> LinkedList<T>::search(const T &data) {
     int i = 1;
     vector<int> pos;
     Node<T> *ptr = head;
@@ -76,21 +74,20 @@ vector<int> LinkedList<T>::search(const T &data) {
 }
 
 // Create a new linked list node
-template<class T>
-Node<T> *LinkedList<T>::create_node(const T &data) {
+template <class T> Node<T> *LinkedList<T>::create_node(const T &data) {
     Node<T> *node = new Node<T>(data);
     assert(node);
     return (node);
 }
 
 // Copy constuctor
-template<class T>
+template <class T>
 LinkedList<T>::LinkedList(const LinkedList<T> &list) : LinkedList() {
     deep_copy(*this, list);
 }
 
 // Overload the assignment operator
-template<class T>
+template <class T>
 LinkedList<T> &LinkedList<T>::operator=(const LinkedList<T> &list) {
     clear();
     deep_copy(*this, list);
@@ -98,14 +95,13 @@ LinkedList<T> &LinkedList<T>::operator=(const LinkedList<T> &list) {
 }
 
 // Return the data from the front of the list
-template<class T>
-T &LinkedList<T>::front(void) const {
+template <class T> T &LinkedList<T>::front(void) const {
     assert(head);
     return (head->get_data());
 }
 
 // Insert node after pos nodes
-template<class T>
+template <class T>
 int LinkedList<T>::insert_after(const int pos, const T &data) {
     assert(pos >= 0 && pos <= size);
 
@@ -138,8 +134,7 @@ int LinkedList<T>::insert_after(const int pos, const T &data) {
 }
 
 // Erase the node after pos
-template<class T>
-bool LinkedList<T>::erase_after(const int pos) {
+template <class T> bool LinkedList<T>::erase_after(const int pos) {
     assert(pos >= 0 && pos < size);
     assert(head);
 
@@ -174,8 +169,7 @@ bool LinkedList<T>::erase_after(const int pos) {
 }
 
 // Push a node to the front of the list
-template<class T>
-void LinkedList<T>::push_front(const T &data) {
+template <class T> void LinkedList<T>::push_front(const T &data) {
     if (!head) {
         head = tail = create_node(data);
     } else {
@@ -188,8 +182,7 @@ void LinkedList<T>::push_front(const T &data) {
 }
 
 // Remove the first node from the list
-template<class T>
-bool LinkedList<T>::pop_front(void) {
+template <class T> bool LinkedList<T>::pop_front(void) {
     if (!head) {
         return (false);
     } else {
@@ -202,8 +195,7 @@ bool LinkedList<T>::pop_front(void) {
 }
 
 // Remove all elements = data
-template<class T>
-void LinkedList<T>::remove(const T &data) {
+template <class T> void LinkedList<T>::remove(const T &data) {
     vector<int> pos = search(data);
     for (int i = 0; i < pos.size(); i++) {
         erase_after(pos[i] - 1 - i);
@@ -211,15 +203,13 @@ void LinkedList<T>::remove(const T &data) {
 }
 
 // Is the list empty?
-template<class T>
-bool LinkedList<T>::empty(void) const {
+template <class T> bool LinkedList<T>::empty(void) const {
     assert(size >= 0);
     return (size == 0);
 }
 
 // Delete all the nodes in the list
-template<class T>
-void LinkedList<T>::clear(void) {
+template <class T> void LinkedList<T>::clear(void) {
     while (head) {
         assert(pop_front());
     }
@@ -227,10 +217,9 @@ void LinkedList<T>::clear(void) {
 }
 
 // Destructor
-template<class T>
-LinkedList<T>::~LinkedList() {
+template <class T> LinkedList<T>::~LinkedList() {
     // Delete the nodes in the list
     clear();
 }
 
-#endif //LINKEDLIST_H
+#endif // LINKEDLIST_H

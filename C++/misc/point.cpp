@@ -2,9 +2,8 @@
 
 using namespace std;
 
-template<class T>
-class Point {
-public:
+template <class T> class Point {
+  public:
     Point() : x(0), y(0) {}
     Point(T x, T y) : x(x), y(y) {}
     Point(const Point<T> &p);
@@ -17,42 +16,36 @@ public:
         return (out);
     }
 
-    pair <T, T> get_coordinates(void);
+    pair<T, T> get_coordinates(void);
     void set_coordinates(const T x, const T y);
 
-private:
+  private:
     T x;
     T y;
 };
 
-template<class T>
-Point<T>::Point(const Point<T> &p) : Point(p.x, p.y) {}
+template <class T> Point<T>::Point(const Point<T> &p) : Point(p.x, p.y) {}
 
-template<class T>
-Point<T> Point<T>::operator+(const Point<T> &p) {
+template <class T> Point<T> Point<T>::operator+(const Point<T> &p) {
     return (Point(x + p.x, y + p.y));
 }
 
-template<class T>
-Point<T> &Point<T>::operator=(const Point<T> &p) {
+template <class T> Point<T> &Point<T>::operator=(const Point<T> &p) {
     x = p.x;
     y = p.y;
 
     return (*this);
 }
 
-template<class T>
-bool Point<T>::operator==(const Point<T> &p) {
+template <class T> bool Point<T>::operator==(const Point<T> &p) {
     return (x == p.x && y == p.y);
 }
 
-template<class T>
-pair <T, T> Point<T>::get_coordinates(void) {
+template <class T> pair<T, T> Point<T>::get_coordinates(void) {
     return (make_pair(x, y));
 }
 
-template<class T>
-void Point<T>::set_coordinates(const T x, const T y) {
+template <class T> void Point<T>::set_coordinates(const T x, const T y) {
     this->x = x;
     this->y = y;
 }

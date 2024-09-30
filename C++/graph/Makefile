@@ -1,7 +1,7 @@
 # Makefile
 
 CC=g++
-CFLAGS=-I. -pipe -O2 -std=c++11
+CFLAGS=-I. -pipe -O2 -std=c++20
 DEPS=graph.h graph_sim.h disjoint_set.h
 OBJS=main.o
 EXEC=main

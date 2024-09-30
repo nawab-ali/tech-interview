@@ -1,38 +1,37 @@
-//Cache Simulator
+// Cache Simulator
 
+#include <algorithm>
+#include <cassert>
 #include <cmath>
 #include <ctime>
-#include <vector>
 #include <iomanip>
-#include <cassert>
 #include <iostream>
-#include <algorithm>
+#include <vector>
 
 using namespace std;
 
-enum class operation {
-    READ, WRITE
-};
+enum class operation { READ, WRITE };
 
 struct CacheStats {
-    int accesses;  // Number of memory references
-    int misses;    // Number of cache misses
+    int accesses; // Number of memory references
+    int misses;   // Number of cache misses
 };
 
 struct CacheBlockEntry {
-    unsigned int valid: 1;
-    unsigned int dirty: 1;
-    unsigned int access: 1;
+    unsigned int valid : 1;
+    unsigned int dirty : 1;
+    unsigned int access : 1;
     unsigned int address;
 };
 
 class Cache {
-public:
-    Cache(const int block_size = 64, const int associativity = 4, const int cache_size = 1024,
-          const int hit_latency = 1, const int miss_latency = 100) : block_size(block_size),
-                                                                     associativity(associativity),
-                                                                     cache_size(cache_size), hit_latency(hit_latency),
-                                                                     miss_latency(miss_latency) {
+  public:
+    Cache(const int block_size = 64, const int associativity = 4,
+          const int cache_size = 1024, const int hit_latency = 1,
+          const int miss_latency = 100)
+        : block_size(block_size), associativity(associativity),
+          cache_size(cache_size), hit_latency(hit_latency),
+          miss_latency(miss_latency) {
         // Check cache parameters
         check_cache_params();
 
@@ -40,8 +39,8 @@ public:
 
         // Initialize cache container
         CacheBlockEntry cbe = {0, 0, 0, 0};
-        vector <CacheBlockEntry> v(associativity, cbe);
-        container = vector < vector < CacheBlockEntry >> (num_sets, v);
+        vector<CacheBlockEntry> v(associativity, cbe);
+        container = vector<vector<CacheBlockEntry>>(num_sets, v);
 
         // Initialize stats
         stats.accesses = 0;
@@ -65,20 +64,23 @@ public:
         cout << "Associativity: " << associativity << endl;
         cout << "Cache accesses: " << stats.accesses << endl;
         cout << "Cache misses: " << stats.misses << endl;
-        cout << "Hit rate: " << static_cast<double>(stats.accesses - stats.misses) / stats.accesses << endl;
+        cout << "Hit rate: "
+             << static_cast<double>(stats.accesses - stats.misses) /
+                    stats.accesses
+             << endl;
     }
 
     ~Cache() {}
 
-private:
+  private:
     int num_sets;
-    int block_size;    //in bytes
+    int block_size; // in bytes
     int associativity;
-    int cache_size;    //in bytes
-    int hit_latency;   //in cycles
-    int miss_latency;  //in cycles
+    int cache_size;   // in bytes
+    int hit_latency;  // in cycles
+    int miss_latency; // in cycles
     CacheStats stats;
-    vector <vector<CacheBlockEntry>> container;
+    vector<vector<CacheBlockEntry>> container;
 
     bool is_power_of_2(const int n) {
         if (n < 1) {
@@ -89,25 +91,32 @@ private:
     }
 
     void check_cache_params(void) {
-        if (block_size < 0 || associativity < 0 || cache_size < 0 || hit_latency < 0 || miss_latency < 0) {
+        if (block_size < 0 || associativity < 0 || cache_size < 0 ||
+            hit_latency < 0 || miss_latency < 0) {
             throw invalid_argument("One or more cache parameters < 0");
         }
 
-        if (!is_power_of_2(block_size) || !is_power_of_2(associativity) || !is_power_of_2(cache_size)) {
-            throw invalid_argument("One or more cache parameters not a power of 2");
+        if (!is_power_of_2(block_size) || !is_power_of_2(associativity) ||
+            !is_power_of_2(cache_size)) {
+            throw invalid_argument(
+                "One or more cache parameters not a power of 2");
         }
 
-        if (ceil(cache_size / (block_size * associativity)) != floor(cache_size / (block_size * associativity))) {
-            throw invalid_argument("Invalid cache_size, block_size, or associativity");
+        if (ceil(cache_size / (block_size * associativity)) !=
+            floor(cache_size / (block_size * associativity))) {
+            throw invalid_argument(
+                "Invalid cache_size, block_size, or associativity");
         }
     }
 
     unsigned int get_index(const unsigned int address) {
         unsigned int num_block_bits = log2(block_size);
         unsigned int num_index_bits = log2(num_sets);
-        unsigned int num_tag_bits = sizeof(address) * 8 - (num_block_bits + num_index_bits);
+        unsigned int num_tag_bits =
+            sizeof(address) * 8 - (num_block_bits + num_index_bits);
 
-        unsigned int index = (address << num_tag_bits) >> (num_block_bits + num_tag_bits);
+        unsigned int index =
+            (address << num_tag_bits) >> (num_block_bits + num_tag_bits);
 
         return (index);
     }
@@ -123,13 +132,12 @@ private:
         auto index = get_index(address);
 
         assert(index >= 0 && index < container.size());
-        vector <CacheBlockEntry> &cache_set = container[index];
-
-        //cout << "address: " << address << " index: " << index << " tag: " << tag << endl;
+        vector<CacheBlockEntry> &cache_set = container[index];
 
         for (auto &cbe : cache_set) {
             if (cbe.valid && (get_tag(address) == get_tag(cbe.address))) {
-                cout << "Cache hit - address: " << address << " index: " << index << endl;
+                cout << "Cache hit - address: " << address
+                     << " index: " << index << endl;
                 cbe.access = 1;
                 if (op == operation::WRITE) {
                     cbe.dirty = 1;
@@ -138,16 +146,19 @@ private:
             }
         }
 
-        cout << "Cache miss - address: " << address << " index: " << index << endl;
+        cout << "Cache miss - address: " << address << " index: " << index
+             << endl;
         return (false);
     }
 
-    void replace_cache_block(const unsigned int address, operation op, vector <CacheBlockEntry> &cache_set) {
+    void replace_cache_block(const unsigned int address, operation op,
+                             vector<CacheBlockEntry> &cache_set) {
         // Random replacement policy
         int index = rand() % associativity;
         CacheBlockEntry &cbe = cache_set[index];
 
-        cout << "Replacing cache block - address: " << cbe.address << " index: " << index << endl;
+        cout << "Replacing cache block - address: " << cbe.address
+             << " index: " << index << endl;
 
         if (cbe.dirty) {
             // Flush to memory
@@ -167,7 +178,7 @@ private:
         auto index = get_index(address);
 
         assert(index >= 0 && index < container.size());
-        vector <CacheBlockEntry> &cache_set = container[index];
+        vector<CacheBlockEntry> &cache_set = container[index];
 
         for (auto &cbe : cache_set) {
             if (!cbe.valid) {

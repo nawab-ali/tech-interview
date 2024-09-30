@@ -4,18 +4,18 @@
 #define DECK_H
 
 #include "card.h"
-#include<vector>
-#include<random>
-#include<algorithm>
+#include <algorithm>
+#include <random>
+#include <vector>
 
 const int SUIT_SIZE = 13;
 const int DECK_SIZE = 52;
 
 class Deck {
-private:
-    vector <Card> container;
+  private:
+    vector<Card> container;
 
-public:
+  public:
     Deck(void);
     Card deal(void);
     void shuffle_deck(void);
@@ -23,14 +23,15 @@ public:
 
     // Overload the << operator
     friend ostream &operator<<(ostream &out, const Deck &d) {
-        for_each(d.container.begin(), d.container.end(), [&out](const Card c) { out << c << endl; });
+        for_each(d.container.begin(), d.container.end(),
+                 [&out](const Card c) { out << c << endl; });
         return (out);
     }
 };
 
 // Constructor
 Deck::Deck(void) {
-    vector <Suit> v = {Suit::SPADE, Suit::HEART, Suit::DIAMOND, Suit::CLUB};
+    vector<Suit> v = {Suit::SPADE, Suit::HEART, Suit::DIAMOND, Suit::CLUB};
 
     for_each(v.begin(), v.end(), [this](const Suit s) {
         for (int i = 1; i <= SUIT_SIZE; i++) {
@@ -80,4 +81,4 @@ bool Deck::return_to_deck(const Card c) {
     }
 }
 
-#endif //DECK_H
+#endif // DECK_H

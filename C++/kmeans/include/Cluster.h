@@ -7,12 +7,12 @@
 #ifndef CLUSTER_H
 #define CLUSTER_H
 
-#include "util.h"
 #include "Point.h"
-#include<vector>
-#include<numeric>
-#include<iostream>
-#include<algorithm>
+#include "util.h"
+#include <algorithm>
+#include <iostream>
+#include <numeric>
+#include <vector>
 
 using namespace std;
 
@@ -20,9 +20,8 @@ using namespace std;
  * @class Cluster
  * @brief This class implements a cluster of points.
  */
-template<class T>
-class Cluster {
-public:
+template <class T> class Cluster {
+  public:
     /**
      * @brief Constructor for the Cluster class.
      * @param id Cluster id.
@@ -36,7 +35,7 @@ public:
      * @param points Vector of points in the cluster.
      * @return None
      */
-    Cluster(int id, vector <Point<T>> points);
+    Cluster(int id, vector<Point<T>> points);
 
     /**
      * @brief Copy Constructor for the Cluster class.
@@ -68,9 +67,7 @@ public:
     friend ostream &operator<<(ostream &out, const Cluster<T> &cluster) {
         out << "Cluster id: " << cluster.id << endl;
         for_each(cluster.points.begin(), cluster.points.end(),
-                 [&out](const Point<T> p) {
-                     out << p << " " << endl;
-                 });
+                 [&out](const Point<T> p) { out << p << " " << endl; });
 
         return (out);
     }
@@ -94,7 +91,7 @@ public:
      * @param void
      * @return vector of points.
      */
-    vector <Point<T>> get_points(void) const;
+    vector<Point<T>> get_points(void) const;
 
     /**
      * @brief Setter method for cluster id.
@@ -122,7 +119,7 @@ public:
      * @param points vector of points.
      * @return void
      */
-    void set_points(const vector <Point<T>> points);
+    void set_points(const vector<Point<T>> points);
 
     /**
      * @brief Add a point to a cluster.
@@ -145,33 +142,33 @@ public:
      */
     long get_num_points(void) const;
 
-private:
+  private:
     int id;
     Point<double> centroid;
-    vector <Point<T>> points;
+    vector<Point<T>> points;
 
     /**
      * @brief Create 2D vector of point coordinates.
      * @param void
      * @return 2D vector of point coordinates.
      */
-    vector <vector<T>> create_vec2d_coordinates(void);
+    vector<vector<T>> create_vec2d_coordinates(void);
 };
 
-template<class T>
-Cluster<T>::Cluster(int id): id(id) {}
+template <class T> Cluster<T>::Cluster(int id) : id(id) {}
 
-template<class T>
-Cluster<T>::Cluster(int id, vector <Point<T>> points): id(id), points(points) {}
+template <class T>
+Cluster<T>::Cluster(int id, vector<Point<T>> points) : id(id), points(points) {}
 
 // Copy Constructor
-template<class T>
-Cluster<T>::Cluster(const Cluster<T> &cluster): Cluster(cluster.id, cluster.points) {
+template <class T>
+Cluster<T>::Cluster(const Cluster<T> &cluster)
+    : Cluster(cluster.id, cluster.points) {
     centroid = cluster.centroid;
 }
 
 // Overload assignment operator
-template<class T>
+template <class T>
 Cluster<T> &Cluster<T>::operator=(const Cluster<T> &cluster) {
     id = cluster.id;
     centroid = cluster.centroid;
@@ -181,70 +178,57 @@ Cluster<T> &Cluster<T>::operator=(const Cluster<T> &cluster) {
 }
 
 // Overload == operator
-template<class T>
+template <class T>
 bool Cluster<T>::operator==(const Cluster<T> &cluster) const {
     return (id == cluster.id && points == cluster.points);
 }
 
-template<class T>
-int Cluster<T>::get_id(void) const {
-    return (id);
-}
+template <class T> int Cluster<T>::get_id(void) const { return (id); }
 
-template<class T>
-Point<double> Cluster<T>::get_centroid(void) const {
+template <class T> Point<double> Cluster<T>::get_centroid(void) const {
     return (centroid);
 }
 
-template<class T>
-vector <Point<T>> Cluster<T>::get_points(void) const {
+template <class T> vector<Point<T>> Cluster<T>::get_points(void) const {
     return (points);
 }
 
-template<class T>
-void Cluster<T>::set_id(const int id) {
-    this->id = id;
-}
+template <class T> void Cluster<T>::set_id(const int id) { this->id = id; }
 
-template<class T>
-void Cluster<T>::set_centroid(const Point<double> centroid) {
+template <class T> void Cluster<T>::set_centroid(const Point<double> centroid) {
     this->centroid = centroid;
 }
 
-template<class T>
-void Cluster<T>::set_points(const vector <Point<T>> points) {
+template <class T> void Cluster<T>::set_points(const vector<Point<T>> points) {
     this->points = points;
 }
 
-template<class T>
-void Cluster<T>::add_point(const Point<T> point) {
+template <class T> void Cluster<T>::add_point(const Point<T> point) {
     points.push_back(point);
 }
 
-template<class T>
-void Cluster<T>::remove_point(const Point<T> point) {
+template <class T> void Cluster<T>::remove_point(const Point<T> point) {
     points.erase(remove(points.begin(), points.end(), point), points.end());
 }
 
-template<class T>
-long Cluster<T>::get_num_points(void) const {
+template <class T> long Cluster<T>::get_num_points(void) const {
     return (points.size());
 }
 
-template<class T>
-void Cluster<T>::update_centroid(void) {
+template <class T> void Cluster<T>::update_centroid(void) {
     vector<double> column_avgs;
     double col_vector_avg = 0.0;
-    vector <vector<T>> coordinates;
+    vector<vector<T>> coordinates;
 
-    if (points.size() == 0) return;
+    if (points.size() == 0)
+        return;
 
     // Create 2D vector of the point coordinates in cluster
     coordinates = create_vec2d_coordinates();
 
     // Extract all columns from 2D vector and calculate avg. per column.
     for (int i = 0; i < coordinates[0].size(); i++) {
-        vector <T> col_vector = get_column_vector<T>(coordinates, i);
+        vector<T> col_vector = get_column_vector<T>(coordinates, i);
         col_vector_avg = accumulate(col_vector.begin(), col_vector.end(), 0.0) /
                          static_cast<double>(col_vector.size());
         column_avgs.push_back(col_vector_avg);
@@ -253,15 +237,16 @@ void Cluster<T>::update_centroid(void) {
 }
 
 // Create 2D vector of the point coordinates in cluster
-template<class T>
-vector <vector<T>> Cluster<T>::create_vec2d_coordinates(void) {
-    vector <vector<T>> coordinates;
+template <class T>
+vector<vector<T>> Cluster<T>::create_vec2d_coordinates(void) {
+    vector<vector<T>> coordinates;
 
-    for_each(points.begin(), points.end(), [&coordinates](const Point<T> point) {
-        coordinates.push_back(point.get_coordinates());
-    });
+    for_each(points.begin(), points.end(),
+             [&coordinates](const Point<T> point) {
+                 coordinates.push_back(point.get_coordinates());
+             });
 
     return (coordinates);
 }
 
-#endif //CLUSTER_H
+#endif // CLUSTER_H

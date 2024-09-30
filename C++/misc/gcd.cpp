@@ -2,27 +2,27 @@
 GCD(a, b)
 **/
 
-#include<ctime>
-#include<cassert>
-#include<iostream>
-#include<algorithm>
+#include <algorithm>
+#include <cassert>
+#include <ctime>
+#include <iostream>
 
 using namespace std;
 
-//Naive GCD implementation: O(n)
+// Naive GCD implementation: O(n)
 int gcd_slow(int a, int b) {
     int gcd = -1;
 
     for (int i = 1; i <= min(a, b); i++) {
         if (!(a % i) && !(b % i)) {
-            //a and b are both divisible by i
+            // a and b are both divisible by i
             gcd = i;
         }
     }
     return (gcd);
 }
 
-//Fast GCD implementation: O(log n)
+// Fast GCD implementation: O(log n)
 int gcd_fast(int a, int b) {
     if (a < b) {
         swap(a, b);

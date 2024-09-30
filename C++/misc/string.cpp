@@ -1,9 +1,9 @@
-#include <vector>
-#include <string>
+#include <boost/algorithm/string.hpp>
 #include <fstream>
 #include <iostream>
+#include <string>
 #include <unordered_map>
-#include <boost/algorithm/string.hpp>
+#include <vector>
 
 using namespace std;
 
@@ -19,8 +19,8 @@ void string_tests(void) {
     cout << s1.substr(10);
 }
 
-vector <string> tokenize_string(const string &str, const char sep) {
-    vector <string> tokens;
+vector<string> tokenize_string(const string &str, const char sep) {
+    vector<string> tokens;
 
     boost::split(tokens, str, [&sep](const char c) { return (c == sep); });
 
@@ -33,16 +33,14 @@ vector <string> tokenize_string(const string &str, const char sep) {
 }
 
 long num_words(const string &text, const char sep) {
-    vector <string> tokens;
+    vector<string> tokens;
 
     tokens = tokenize_string(text, sep);
 
     return (tokens.size());
 }
 
-long num_chars(const string &text) {
-    return (text.length());
-}
+long num_chars(const string &text) { return (text.length()); }
 
 void wc(string filename) {
     ifstream file(filename);
@@ -60,7 +58,7 @@ void wc(string filename) {
     }
 }
 
-void word_freq(const vector <string> &words) {
+void word_freq(const vector<string> &words) {
     unordered_map<string, int> umap;
 
     for (const auto &word : words) {
@@ -78,11 +76,11 @@ void word_freq(const vector <string> &words) {
 
 int main(int argc, char **argv) {
     const char sep = ' ';
-    vector <string> tokens;
+    vector<string> tokens;
     string text = "Let me split this into words Let me split";
     string filename = "C:\\wpm_log.txt";
 
-    //string_tests();
+    // string_tests();
     tokens = tokenize_string(text, sep);
     for (const auto &token : tokens) {
         cout << token << endl;

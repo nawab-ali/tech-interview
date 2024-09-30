@@ -6,15 +6,15 @@
 #include "graph.h"
 
 class GraphSim {
-private:
+  private:
     int sim_iterations;
     int graph_vertices;
     double graph_weight_max;
     double graph_edge_density;
 
-public:
-    GraphSim(const int sim_iterations, const int graph_vertices, const double graph_weight_max,
-             const double graph_edge_density);
+  public:
+    GraphSim(const int sim_iterations, const int graph_vertices,
+             const double graph_weight_max, const double graph_edge_density);
 
     int get_sim_iterations(void);
     int get_graph_vertices(void);
@@ -27,7 +27,8 @@ public:
 };
 
 // Constructor
-GraphSim::GraphSim(const int sim_iterations, const int graph_vertices, const double graph_weight_max,
+GraphSim::GraphSim(const int sim_iterations, const int graph_vertices,
+                   const double graph_weight_max,
                    const double graph_edge_density = 0.1) {
     assert(sim_iterations > 0);
     assert(graph_vertices > 0);
@@ -41,24 +42,16 @@ GraphSim::GraphSim(const int sim_iterations, const int graph_vertices, const dou
 }
 
 // Return the number of simulation iterations
-int GraphSim::get_sim_iterations(void) {
-    return (sim_iterations);
-}
+int GraphSim::get_sim_iterations(void) { return (sim_iterations); }
 
 // Return the number of vertices in the graph
-int GraphSim::get_graph_vertices(void) {
-    return (graph_vertices);
-}
+int GraphSim::get_graph_vertices(void) { return (graph_vertices); }
 
 // Return the graph_weight_max
-double GraphSim::get_graph_weight_max(void) {
-    return (graph_weight_max);
-}
+double GraphSim::get_graph_weight_max(void) { return (graph_weight_max); }
 
 // Return the graph_edge_density
-double GraphSim::get_graph_edge_density(void) {
-    return (graph_edge_density);
-}
+double GraphSim::get_graph_edge_density(void) { return (graph_edge_density); }
 
 // Set the sim_iterations
 void GraphSim::set_sim_iterations(const int sim_iterations) {
@@ -94,4 +87,4 @@ vector<double> GraphSim::sim_shortest_path(void) {
     return (sim_spth);
 }
 
-#endif //GRAPH_SIM_H
+#endif // GRAPH_SIM_H

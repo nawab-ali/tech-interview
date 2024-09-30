@@ -1,11 +1,11 @@
 // main.cpp
 
-#include "graph_sim.h"
 #include "disjoint_set.h"
+#include "graph_sim.h"
 
 int main(int argc, char **argv) {
     double mst_cost = 0.0;
-    vector <edge_t> mst_edges;
+    vector<edge_t> mst_edges;
 
     GraphSim g_sim(100, 100, 100.0, 0.2);
     vector<double> v = g_sim.sim_shortest_path();

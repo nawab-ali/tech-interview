@@ -1,50 +1,50 @@
-//Check if brackets '({[]})' are balanced in src code
+// Check if brackets '({[]})' are balanced in src code
 
-#include<stack>
-#include<string>
-#include<fstream>
-#include<iostream>
+#include <fstream>
+#include <iostream>
+#include <stack>
+#include <string>
 
 using namespace std;
 
-//Check if brackets '({[]})' are balanced in string expression
+// Check if brackets '({[]})' are balanced in string expression
 bool is_balanced(string expression) {
     stack<char> s;
 
     for (char c : expression) {
         switch (c) {
-            case '[':
-            case '(':
-            case '{':
-                s.push(c);
-                break;
-            case ']':
-                if (s.empty() || s.top() != '[') {
-                    return false;
-                } else {
-                    s.pop();
-                }
-                break;
-            case ')':
-                if (s.empty() || s.top() != '(') {
-                    return false;
-                } else {
-                    s.pop();
-                }
-                break;
-            case '}':
-                if (s.empty() || s.top() != '{') {
-                    return false;
-                } else {
-                    s.pop();
-                }
-                break;
-            default:
-                break;
+        case '[':
+        case '(':
+        case '{':
+            s.push(c);
+            break;
+        case ']':
+            if (s.empty() || s.top() != '[') {
+                return false;
+            } else {
+                s.pop();
+            }
+            break;
+        case ')':
+            if (s.empty() || s.top() != '(') {
+                return false;
+            } else {
+                s.pop();
+            }
+            break;
+        case '}':
+            if (s.empty() || s.top() != '{') {
+                return false;
+            } else {
+                s.pop();
+            }
+            break;
+        default:
+            break;
         }
     }
 
-    //Unbalanced brackets if stack not empty
+    // Unbalanced brackets if stack not empty
     return (s.empty());
 }
 

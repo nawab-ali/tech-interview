@@ -1,29 +1,27 @@
 // Binary Search Tree
 
-#include <vector>
+#include <algorithm>
 #include <cassert>
 #include <iostream>
-#include <algorithm>
+#include <vector>
 
 using namespace std;
 
-template<class T>
-struct Node {
+template <class T> struct Node {
     T data;
     Node *left;
     Node *right;
 };
 
-template<class T>
-class BinarySearchTree {
-public:
+template <class T> class BinarySearchTree {
+  public:
     BinarySearchTree(Node<T> *root) : root(root) {}
     void inorder_traversal(vector<Node<T> *> &v);
     void insert(const T &data);
     bool search(const T &data);
 
     friend ostream &operator<<(ostream &out, BinarySearchTree<T> &bst) {
-        vector < Node<T> * > nodes;
+        vector<Node<T> *> nodes;
         bst.inorder_traversal(nodes);
 
         for (const auto &node : nodes) {
@@ -35,20 +33,21 @@ public:
 
     ~BinarySearchTree();
 
-private:
+  private:
     Node<T> *root;
     void insert_util(Node<T> *root, const T &data);
     bool search_util(Node<T> *root, const T &data);
     void inorder_traversal_util(Node<T> *root, vector<Node<T> *> &v);
 };
 
-template<class T>
+template <class T>
 void BinarySearchTree<T>::inorder_traversal(vector<Node<T> *> &v) {
     inorder_traversal_util(root, v);
 }
 
-template<class T>
-void BinarySearchTree<T>::inorder_traversal_util(Node<T> *root, vector<Node<T> *> &v) {
+template <class T>
+void BinarySearchTree<T>::inorder_traversal_util(Node<T> *root,
+                                                 vector<Node<T> *> &v) {
     if (root) {
         inorder_traversal_util(root->left, v);
         v.push_back(root);
@@ -56,8 +55,7 @@ void BinarySearchTree<T>::inorder_traversal_util(Node<T> *root, vector<Node<T> *
     }
 }
 
-template<class T>
-void BinarySearchTree<T>::insert(const T &data) {
+template <class T> void BinarySearchTree<T>::insert(const T &data) {
     try {
         insert_util(root, data);
     } catch (exception &e) {
@@ -65,7 +63,7 @@ void BinarySearchTree<T>::insert(const T &data) {
     }
 }
 
-template<class T>
+template <class T>
 void BinarySearchTree<T>::insert_util(Node<T> *root, const T &data) {
     if (root) {
         Node<int> *node = new Node<int>;
@@ -92,12 +90,11 @@ void BinarySearchTree<T>::insert_util(Node<T> *root, const T &data) {
     }
 }
 
-template<class T>
-bool BinarySearchTree<T>::search(const T &data) {
+template <class T> bool BinarySearchTree<T>::search(const T &data) {
     return (search_util(root, data));
 }
 
-template<class T>
+template <class T>
 bool BinarySearchTree<T>::search_util(Node<T> *root, const T &data) {
     if (root) {
         if (data == root->data) {
@@ -112,9 +109,8 @@ bool BinarySearchTree<T>::search_util(Node<T> *root, const T &data) {
     }
 }
 
-template<class T>
-BinarySearchTree<T>::~BinarySearchTree(void) {
-    vector < Node<T> * > nodes;
+template <class T> BinarySearchTree<T>::~BinarySearchTree(void) {
+    vector<Node<T> *> nodes;
 
     inorder_traversal(nodes);
 
@@ -124,7 +120,7 @@ BinarySearchTree<T>::~BinarySearchTree(void) {
 }
 
 int main(int argc, char **argv) {
-    vector < Node<int> * > nodes;
+    vector<Node<int> *> nodes;
     Node<int> *root = new Node<int>;
     vector<int> v = {17, 34, 8, 3567, 8, 425, 5, 3, 100, 45, 34, 23, 67};
 

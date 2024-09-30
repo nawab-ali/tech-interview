@@ -1,9 +1,9 @@
-#include <stack>
-#include <queue>
-#include <vector>
-#include <string>
 #include <iostream>
+#include <queue>
+#include <stack>
+#include <string>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -82,9 +82,9 @@ void umap_tests(void) {
 }
 
 int main(int argc, char **argv) {
-    //vector_tests();
-    //stack_tests();
-    //queue_tests();
+    // vector_tests();
+    // stack_tests();
+    // queue_tests();
     umap_tests();
 
     return 0;

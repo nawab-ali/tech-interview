@@ -7,13 +7,13 @@
 #ifndef UTIL_H
 #define UTIL_H
 
-#include<string>
-#include<vector>
-#include<fstream>
-#include<sstream>
-#include<iostream>
-#include<boost/lexical_cast.hpp>
-#include<boost/algorithm/string.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/lexical_cast.hpp>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -23,15 +23,17 @@ using namespace std;
  * @param num_features Number of features in the data.
  * @return Vector containing tokenized string.
  */
-template<class T>
-vector <T> tokenize(const string &str, char delimiter, unsigned int num_features) {
+template <class T>
+vector<T> tokenize(const string &str, char delimiter,
+                   unsigned int num_features) {
     string token;
-    vector <T> tokens;
+    vector<T> tokens;
     int token_count = 0;
     istringstream token_stream(str);
 
     // Convert str to tokens. Only process the first num_features tokens.
-    while (getline(token_stream, token, delimiter) && token_count < num_features) {
+    while (getline(token_stream, token, delimiter) &&
+           token_count < num_features) {
         boost::trim(token);
         tokens.push_back(boost::lexical_cast<T>(token));
         token_count++;
@@ -50,12 +52,12 @@ vector <T> tokenize(const string &str, char delimiter, unsigned int num_features
  * @param num_features Number of features in the data.
  * @return 2-dimensional vector with the training data.
  */
-template<class T>
-vector <vector<T>>
-read_training_data(const string &training_data_file, unsigned int num_features) {
+template <class T>
+vector<vector<T>> read_training_data(const string &training_data_file,
+                                     unsigned int num_features) {
     string line;
     ifstream file;
-    vector <vector<T>> training_data;
+    vector<vector<T>> training_data;
 
     file.open(training_data_file);
 
@@ -73,12 +75,12 @@ read_training_data(const string &training_data_file, unsigned int num_features) 
  * @param index column index.
  * @return column vector.
  */
-template<class T>
-vector <T>
-get_column_vector(const vector <vector<T>> &vec2d, unsigned int index) {
-    vector <T> column;
+template <class T>
+vector<T> get_column_vector(const vector<vector<T>> &vec2d,
+                            unsigned int index) {
+    vector<T> column;
 
-    for_each(vec2d.begin(), vec2d.end(), [&column, index](const vector <T> row) {
+    for_each(vec2d.begin(), vec2d.end(), [&column, index](const vector<T> row) {
         if (index >= row.size()) {
             throw invalid_argument("index >= row.size()");
         }
@@ -88,4 +90,4 @@ get_column_vector(const vector <vector<T>> &vec2d, unsigned int index) {
     return (column);
 }
 
-#endif //UTIL_H
+#endif // UTIL_H

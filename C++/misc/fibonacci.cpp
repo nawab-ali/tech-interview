@@ -5,16 +5,16 @@ F(1) = 1
 F(n) = F(n-1) + F(n-2)
 **/
 
-#include<ctime>
-#include<vector>
-#include<cassert>
-#include<cstdlib>
-#include<iostream>
+#include <cassert>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
 long long fibonacci_slow(int n) {
-    //Naive and slow implementation
+    // Naive and slow implementation
     if (n <= 1) {
         return n;
     } else {
@@ -23,7 +23,7 @@ long long fibonacci_slow(int n) {
 }
 
 long long fibonacci_fast(int n) {
-    //Fast implementation
+    // Fast implementation
     vector<long long> v(n + 1);
 
     v[0] = 0;

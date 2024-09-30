@@ -3,19 +3,19 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <tuple>
-#include <queue>
-#include <string>
-#include <limits>
-#include <random>
-#include <vector>
-#include <utility>
+#include <algorithm>
 #include <cassert>
 #include <fstream>
-#include <sstream>
-#include <iterator>
 #include <iostream>
-#include <algorithm>
+#include <iterator>
+#include <limits>
+#include <queue>
+#include <random>
+#include <sstream>
+#include <string>
+#include <tuple>
+#include <utility>
+#include <vector>
 
 #include "disjoint_set.h"
 
@@ -31,22 +31,23 @@ typedef pair<bool, double> edge_cost_t;
 typedef pair<double, int> spth_t;
 
 class Graph {
-private:
+  private:
     bool directed;
     int num_vertices;
-    vector <vector<edge_cost_t>> adj_matrix;
+    vector<vector<edge_cost_t>> adj_matrix;
 
     void populate_default_graph(void);
     bool is_cycle(DisjointSet &ds, const edge_t &e);
 
-public:
+  public:
     Graph(const bool directed = false, const int num_vertices = 0);
-    Graph(const bool directed, const int num_vertices, const double edge_density, const double weight_range);
+    Graph(const bool directed, const int num_vertices,
+          const double edge_density, const double weight_range);
     Graph(const bool directed, const string &filename);
 
     bool is_directed(void);
-    int V(void);    // #vertices
-    long E(void);    // #edges
+    int V(void);  // #vertices
+    long E(void); // #edges
     bool adjacent(const int u, const int v);
     vector<int> neighbors(const int u);
     bool add_edge(const int u, const int v, const double weight);
@@ -55,15 +56,15 @@ public:
     void set_edge_weight(const int u, const int v, const double weight);
     void random_graph(const double edge_density, const double weight_range);
     vector<double> shortest_path(const int u);
-    vector <edge_t> mst(void);
+    vector<edge_t> mst(void);
     void clear(void);
 
     // Overload the << operator
     friend ostream &operator<<(ostream &out, const Graph &g) {
         for (int i = 0; i < g.num_vertices; i++) {
             for (int j = 0; j < g.num_vertices; j++) {
-                out << "<" << g.adj_matrix[i][j].first << ", " <<
-                    g.adj_matrix[i][j].second << ">" << " ";
+                out << "<" << g.adj_matrix[i][j].first << ", "
+                    << g.adj_matrix[i][j].second << ">" << " ";
             }
             out << endl;
         }
@@ -76,7 +77,7 @@ void Graph::populate_default_graph(void) {
     assert(num_vertices >= 0);
 
     for (int i = 0; i < num_vertices; i++) {
-        vector <edge_cost_t> v;
+        vector<edge_cost_t> v;
         adj_matrix.push_back(v);
         for (int j = 0; j < num_vertices; j++) {
             adj_matrix[i].push_back(make_pair(false, 0.0));
@@ -103,8 +104,9 @@ Graph::Graph(const bool directed, const int num_vertices) {
 }
 
 // Constructor to generate random edges in the graph
-Graph::Graph(const bool directed, const int num_vertices, const double edge_density, const double weight_range) :
-             Graph(directed, num_vertices) {
+Graph::Graph(const bool directed, const int num_vertices,
+             const double edge_density, const double weight_range)
+    : Graph(directed, num_vertices) {
     random_graph(edge_density, weight_range);
 }
 
@@ -131,8 +133,8 @@ Graph::Graph(const bool directed, const string &filename) {
             // Subsequent lines contain edge costs (i, j, cost)
             int i, j, cost;
             istringstream iss(line);
-            vector <string> tokens{istream_iterator < string > {iss},
-                                   istream_iterator < string > {}};
+            vector<string> tokens{istream_iterator<string>{iss},
+                                  istream_iterator<string>{}};
             i = stoi(tokens[0]);
             j = stoi(tokens[1]);
             cost = stoi(tokens[2]);
@@ -144,14 +146,10 @@ Graph::Graph(const bool directed, const string &filename) {
 }
 
 // Is it a directed graph?
-bool Graph::is_directed(void) {
-    return (directed);
-}
+bool Graph::is_directed(void) { return (directed); }
 
 // Return the number of vertices in the graph
-int Graph::V(void) {
-    return (num_vertices);
-}
+int Graph::V(void) { return (num_vertices); }
 
 // Return the number of edges in the graph
 long Graph::E(void) {
@@ -268,7 +266,8 @@ void Graph::random_graph(const double edge_density, const double weight_range) {
     // Generate random edge probabilities and weights
     for (int i = 0; i < num_vertices; i++) {
         for (int j = 0; j < num_vertices; j++) {
-            if (i == j) continue;
+            if (i == j)
+                continue;
             if (edge_prob(generator) < edge_density) {
                 add_edge(i, j, edge_weight(generator));
             }
@@ -279,7 +278,7 @@ void Graph::random_graph(const double edge_density, const double weight_range) {
 // Calculate the shortest path from vertex u to all other vertices using
 // Dijkstra's algorithm
 vector<double> Graph::shortest_path(const int u) {
-    priority_queue <spth_t, vector<spth_t>, greater<spth_t>> pq;
+    priority_queue<spth_t, vector<spth_t>, greater<spth_t>> pq;
     vector<double> distance(num_vertices, numeric_limits<double>::infinity());
 
     assert(u >= 0 && u < num_vertices);
@@ -316,11 +315,11 @@ vector<double> Graph::shortest_path(const int u) {
 }
 
 // Find a minimum spanning tree using Kruskal's algorithm
-vector <edge_t> Graph::mst(void) {
+vector<edge_t> Graph::mst(void) {
     int i = 0;
     DisjointSet ds(V());
-    vector <edge_t> edges;
-    vector <edge_t> mst_edges;
+    vector<edge_t> edges;
+    vector<edge_t> mst_edges;
 
     assert(!is_directed());
 
@@ -362,4 +361,4 @@ void Graph::clear(void) {
     }
 }
 
-#endif //GRAPH_H
+#endif // GRAPH_H

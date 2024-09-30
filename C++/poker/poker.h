@@ -9,7 +9,7 @@
 const int POKER_HAND_SIZE = 5;
 
 // Do all the cards in the hand belong to the same suit?
-bool is_flush(const vector <Card> &hand) {
+bool is_flush(const vector<Card> &hand) {
     assert(hand.size() == POKER_HAND_SIZE);
     assert(hand[0].get_pips() >= 1 && hand[0].get_pips() <= SUIT_SIZE);
 
@@ -27,7 +27,7 @@ bool is_flush(const vector <Card> &hand) {
 }
 
 // Is the poker hand a straight?
-bool is_straight(const vector <Card> &hand) {
+bool is_straight(const vector<Card> &hand) {
     assert(hand.size() == POKER_HAND_SIZE);
 
     vector<int> pips;
@@ -45,24 +45,25 @@ bool is_straight(const vector <Card> &hand) {
                 pips[2] == pips[3] - 1 && pips[3] == pips[4] - 1);
     } else {
         // Aces need special logic
-        return ((pips[0] == pips[1] - 1 && pips[1] == pips[2] - 1 &&
-                 pips[2] == pips[3] - 1 && pips[3] == pips[4] - 1) ||
-                (pips[1] == 10 && pips[2] == 11 && pips[3] == 12 && pips[4] == 13));
+        return (
+            (pips[0] == pips[1] - 1 && pips[1] == pips[2] - 1 &&
+             pips[2] == pips[3] - 1 && pips[3] == pips[4] - 1) ||
+            (pips[1] == 10 && pips[2] == 11 && pips[3] == 12 && pips[4] == 13));
     }
 }
 
 // Is the poker hand a straight flush?
-bool is_straight_flush(const vector <Card> &hand) {
+bool is_straight_flush(const vector<Card> &hand) {
     return (is_straight(hand) && is_flush(hand));
 }
 
 // Print the hand
-void print_hand(const vector <Card> &hand) {
+void print_hand(const vector<Card> &hand) {
     assert(hand.size() == POKER_HAND_SIZE);
 
-    for (auto Card:hand) {
+    for (auto Card : hand) {
         cout << Card << endl;
     }
 }
 
-#endif //POKER_H
+#endif // POKER_H

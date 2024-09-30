@@ -1,7 +1,7 @@
 # Makefile
 
 CC=g++
-CFLAGS=-I. -pipe -O2 -std=c++11
+CFLAGS=-I. -pipe -O2 -std=c++20
 DEPS=node.h list.h
 OBJS=main.o
 EXEC=main

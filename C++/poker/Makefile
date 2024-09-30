@@ -4,7 +4,7 @@ CC=g++
 EXE=main
 OBJS=main.o
 DEPS=card.h poker.h deck.h
-CFLAGS=-I. -pipe -O2 -std=c++11
+CFLAGS=-I. -pipe -O2 -std=c++20
 
 %.o: %.cpp ${DEPS}
 	${CC} -c -o $@ $< ${CFLAGS}

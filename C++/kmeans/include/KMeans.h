@@ -7,12 +7,12 @@
 #ifndef KMEANS_H
 #define KMEANS_H
 
-#include "Point.h"
 #include "Cluster.h"
-#include<cmath>
-#include<random>
-#include<vector>
-#include<functional>
+#include "Point.h"
+#include <cmath>
+#include <functional>
+#include <random>
+#include <vector>
 
 /**
  * @brief This function returns k random points from the dataset.
@@ -20,12 +20,13 @@
  * @param points Vector of points
  * @return Vector of k random points
  */
-template<class T>
-vector <Point<double>> get_random_points(unsigned int k, const vector <Point<T>> &points) {
+template <class T>
+vector<Point<double>> get_random_points(unsigned int k,
+                                        const vector<Point<T>> &points) {
     random_device device;
     mt19937 generator(device());
     uniform_int_distribution<int> distribution(0, points.size() - 1);
-    vector <Point<double>> random_points;
+    vector<Point<double>> random_points;
 
     if (k > points.size()) {
         throw invalid_argument("k > points.size()");
@@ -45,8 +46,9 @@ vector <Point<double>> get_random_points(unsigned int k, const vector <Point<T>>
  * @param random_points Vector of random points from dataset.
  * @return Void
  */
-template<class T>
-void init_cluster_centroid(vector <Cluster<T>> &clusters, vector <Point<double>> &random_points) {
+template <class T>
+void init_cluster_centroid(vector<Cluster<T>> &clusters,
+                           vector<Point<double>> &random_points) {
     int i = 0;
 
     if (clusters.size() > random_points.size()) {
@@ -54,7 +56,8 @@ void init_cluster_centroid(vector <Cluster<T>> &clusters, vector <Point<double>>
     }
 
     // Initialize cluster centroids with random points from dataset
-    for_each(clusters.begin(), clusters.end(), [&random_points, &i](Cluster<T> &cluster) {
+    for_each(clusters.begin(), clusters.end(),
+             [&random_points, &i](Cluster<T> &cluster) {
                  cluster.set_centroid(random_points[i++]);
              });
 }
@@ -66,12 +69,13 @@ void init_cluster_centroid(vector <Cluster<T>> &clusters, vector <Point<double>>
  * @param point2 Point 2
  * @return Euclidean distance between point1 and point2
  */
-template<class T>
+template <class T>
 double euclidean_distance(const Point<T> &point1, const Point<T> &point2) {
     double distance = 0.0;
 
     if (point1.get_dimensions() != point2.get_dimensions()) {
-        throw invalid_argument("point1.get_dimensions() != point2.get_dimensions()");
+        throw invalid_argument(
+            "point1.get_dimensions() != point2.get_dimensions()");
     }
 
     for (int i = 0; i < point1.get_dimensions(); i++) {
@@ -89,8 +93,8 @@ double euclidean_distance(const Point<T> &point1, const Point<T> &point2) {
  * @param clusters vector of k clusters
  * @return cluster_id of the nearest cluster
  */
-template<class T>
-int get_nearest_cluster(const Point<T> &point, vector <Cluster<T>> &clusters) {
+template <class T>
+int get_nearest_cluster(const Point<T> &point, vector<Cluster<T>> &clusters) {
     if (clusters.size() == 0) {
         throw invalid_argument("clusters.size() == 0");
     }
@@ -117,21 +121,22 @@ int get_nearest_cluster(const Point<T> &point, vector <Cluster<T>> &clusters) {
  * @param clusters vector of k clusters
  * @return None
  */
-template<class T>
-void categorize_points_into_clusters(vector <Point<T>> &points, vector <Cluster<T>> &clusters) {
+template <class T>
+void categorize_points_into_clusters(vector<Point<T>> &points,
+                                     vector<Cluster<T>> &clusters) {
     for_each(points.begin(), points.end(), [&clusters](Point<T> &point) {
         int nearest_cluster_id = get_nearest_cluster(point, clusters);
 
         if (nearest_cluster_id < 0 || nearest_cluster_id >= clusters.size()) {
-            throw out_of_range("nearest_cluster_id < 0 || nearest_cluster_id >= clusters.size()");
+            throw out_of_range("nearest_cluster_id < 0 || nearest_cluster_id "
+                               ">= clusters.size()");
         }
 
         clusters[nearest_cluster_id].add_point(point);
     });
 
-    for_each(clusters.begin(), clusters.end(), [](Cluster<T> &cluster) {
-        cluster.update_centroid();
-    });
+    for_each(clusters.begin(), clusters.end(),
+             [](Cluster<T> &cluster) { cluster.update_centroid(); });
 }
 
 /**
@@ -139,13 +144,14 @@ void categorize_points_into_clusters(vector <Point<T>> &points, vector <Cluster<
  * @param clusters vector of clusters
  * @return None
  */
-template<class T>
-void remove_points_from_clusters(vector <Cluster<T>> &clusters) {
-    vector <Point<T>> empty_points;
+template <class T>
+void remove_points_from_clusters(vector<Cluster<T>> &clusters) {
+    vector<Point<T>> empty_points;
 
-    for_each(clusters.begin(), clusters.end(), [empty_points](Cluster<T> &cluster) {
-        cluster.set_points(empty_points);
-    });
+    for_each(clusters.begin(), clusters.end(),
+             [empty_points](Cluster<T> &cluster) {
+                 cluster.set_points(empty_points);
+             });
 }
 
 /**
@@ -156,11 +162,11 @@ void remove_points_from_clusters(vector <Cluster<T>> &clusters) {
  * algorithm.
  * @return Vector of clusters
  */
-template<class T>
-vector <Cluster<T>>
-KMeans(unsigned int k, vector <Point<T>> &points, long max_iterations = 1000) {
-    vector <Cluster<T>> clusters;
-    vector <Point<double>> random_points;
+template <class T>
+vector<Cluster<T>> KMeans(unsigned int k, vector<Point<T>> &points,
+                          long max_iterations = 1000) {
+    vector<Cluster<T>> clusters;
+    vector<Point<double>> random_points;
 
     if (k > points.size()) {
         throw invalid_argument("k > points.size()");
@@ -181,4 +187,4 @@ KMeans(unsigned int k, vector <Point<T>> &points, long max_iterations = 1000) {
     return (clusters);
 }
 
-#endif //KMEANS_H
+#endif // KMEANS_H

@@ -1,10 +1,10 @@
-#include <ctime>
-#include <vector>
+#include <algorithm>
 #include <cassert>
-#include <numeric>
+#include <ctime>
 #include <iomanip>
 #include <iostream>
-#include <algorithm>
+#include <numeric>
+#include <vector>
 
 using namespace std;
 

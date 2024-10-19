@@ -36,22 +36,23 @@
 # 0 <= sc < n
 
 from typing import List
+from collections import deque
 
 def floodFill(image: List[List[int]], sr: int, sc: int, newColor: int) -> List[List[int]]:
     m = len(image)
     n = len(image[0])
     origColor = image[sr][sc]
-    pixelsToBeProcessed = [[sr, sc]]
+    pixelsToBeProcessed = deque([(sr, sc)])
     
     if origColor != newColor:
         while pixelsToBeProcessed:
-            row, col = pixelsToBeProcessed.pop(0)
+            row, col = pixelsToBeProcessed.popleft()
             if 0 <= row < m and 0 <= col < n and image[row][col] == origColor:
                 image[row][col] = newColor
-                pixelsToBeProcessed.append([row - 1, col])
-                pixelsToBeProcessed.append([row + 1, col])
-                pixelsToBeProcessed.append([row, col - 1])
-                pixelsToBeProcessed.append([row, col + 1])
+                pixelsToBeProcessed.append((row - 1, col))
+                pixelsToBeProcessed.append((row + 1, col))
+                pixelsToBeProcessed.append((row, col - 1))
+                pixelsToBeProcessed.append((row, col + 1))
     
     return image
 
